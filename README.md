@@ -6,10 +6,11 @@
 
 ```text
 ROSE-AP of the FlexHex project tries to make data gathering from Orion Context Broker entities to influx-db easier.
+
 ```
 
 This project is part of [DIH^2](http://www.dih-squared.eu/). For more information check the RAMP Catalogue entry for the
-[components](https://github.com/flexhex-roseap).
+[components](https://github.com/ramp-eu).
 
 | :books: [Documentation](https://flexhex_rose-ap.readthedocs.io/en/latest/) |
 | --------------------------------------------- |
