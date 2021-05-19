@@ -1,13 +1,10 @@
-# <TITLE>
+# FlexHex ROSE-AP
 
 [![License: MIT](https://img.shields.io/github/license/ramp-eu/TTE.project1.svg)](https://opensource.org/licenses/MIT)
 <br/>
 [![Documentation Status](https://readthedocs.org/projects/flexhex_rose-ap/badge/?version=latest)](https://flexhex_rose-ap.readthedocs.io/en/latest/?badge=latest)
 
-```text
 ROSE-AP of the FlexHex project tries to make data gathering from Orion Context Broker entities to influx-db easier.
-
-```
 
 This project is part of [DIH^2](http://www.dih-squared.eu/). For more information check the RAMP Catalogue entry for the
 [components](https://github.com/ramp-eu).
@@ -27,42 +24,43 @@ This project is part of [DIH^2](http://www.dih-squared.eu/). For more informatio
 
 ## Background
 
-```text
-Background information and links to relevant terms
-```
+Data gathering can be cumbersome sometimes. This module tries to solve and simplify it. To make data gathering to influx-db a bit easier.
+
+It tries to do so via WEB interface and for more advanced use cases - API.
+
+Currently there are four main parts that user/operator can control:
+
+- Measurements - Measurement to be processed from incoming Orion Context Broker (further - OCB) subscription data and uploaded into influx-db. User defines entities and their types for the OCB subscription. Also fields and tags to gather from the OCB entity.
+- Buckets - Used to define buckets of the influx-db. Allows to assign different measurements.
+- Organizations -  Used to define organizations of the influx-db. Allows to assign different buckets.
+- Subscriptions - Used to control selected measurement subscription. CRUD principle. Main use case - automatically form the required subscription for the selected measurement and post it to OCB.
+
+It is based on OCB entities and subscriptions, and is NGSIv2 compliant to process the incoming data into Line Protocol for influx-db.
+
 
 ## Install
 
-```text
 How to install the component
 
 Information about how to install the FlexHex ROSE-AP can be found at the corresponding section of the
 [Installation & Administration Guide](docs/installationguide.md).
 
-```
-
 ## Usage
 
-```text
 How to use the component
 
 Information about how to use the FlexHex ROSE-AP can be found in the [User & Programmers Manual](docs/usermanual.md).
-```
 
 ## API
 
-```text
 Definition of the API interface:
 
 Information about the API of  the FlexHex ROSE-AP can be found in the [API documentation](docs/api.md).
 
-```
 
 ## Testing
 
-```text
 TBD
-```
 
 ## License
 
