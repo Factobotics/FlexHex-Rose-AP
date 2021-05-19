@@ -167,7 +167,7 @@ You can navigate pages using the NavBar on the left of the page.
 
 - **Measurements:**
 
-    To start using the system, measurements should be defined. 
+    To start using the module, measurements are one of the things that must be defined. 
 
     Measurement defines how module treats and processes subscription data from Orion Context Broker. 
 
@@ -175,5 +175,66 @@ You can navigate pages using the NavBar on the left of the page.
 
     You can define *measurements* in **Measurements** page.
 
-    By default, there should be one measurement available. It should be compatible with your created entity, if you used the provided example above. You can check this measurement data in **Measurements** page, **Get measurement information** tab.
+    - Check out available measurement and it's data:
+
+        By default, there should be one measurement available. It should be compatible with your created entity, if you used the provided example above. 
+        
+        You can check this measurement data:
+
+        - Navigate to **Measurements** page, **Get measurement information** tab.
+        - Click the dropdown button.
+        - The available *measurement* should be loaded and seen as one of the options, if not there should be *"No measurements available."* line.
+        - Click on the available measurement in the dropdown.
+        - *Measurement* data should be loaded and displayed in the fields below.
+        - If errors occur, notifications at the top-right of the screen shoulld help to identify the problem.
+
+- **Buckets:**
+
+    Defining *buckets* is the second step to be able to use the module.
+
+    *Bucket* defines where measurement will be placed. In a sense, *bucket* is a... bucket... a data sink, it can be filled with various data of various types. Then it can be quered, filtered and shaped into a more usable state to display in graphs.
+
+    When OCB subscription data is received and processed successfully, it searches if the *measurement* has valid *bucket* assigned.
+
+    You can define *buckets* in **Buckets** page.
+
+    - Check out available bucket and it's data:
+
+        By default, there should be one bucket available. It should have assigned measurement already.
+        
+        You can check this bucket's data:
+
+        - Navigate to **Buckets** page, **Get bucket information** tab.
+        - Click the dropdown button.
+        - The available *bucket* should be loaded and seen as one of the options, if not there should be *"No buckets available."* line.
+        - Click on the available *bucket* in the dropdown.
+        - *Bucket* data should be loaded and displayed in the fields below.
+        - If errors occur, notifications at the top-right of the screen shoulld help to identify the problem.
+
+- **Organizations:**
+
+    Defining *organizations* is the third step to be able to use the module.
+
+    *Organization* defines which workspace to use in Influx-db. It is a logical segregation. An organization has seperate users groups, dashboards, tasks,  
+    measurement will be placed. In a sense, *bucket* is a... bucket... a data sink, it can be filled with various data of various types. Then it can be quered, filtered and shaped into a more usable state to display in graphs.
+
+    When OCB subscription data is received and processed successfully, it searches if the *measurement* has valid *bucket* assigned.
+
+    You can define *buckets* in **Buckets** page.
+
+    - Check out available bucket and it's data:
+
+        By default, there should be one bucket available. It should have assigned measurement already.
+        
+        You can check this bucket's data:
+
+        - Navigate to **Buckets** page, **Get bucket information** tab.
+        - Click the dropdown button.
+        - The available *bucket* should be loaded and seen as one of the options, if not there should be *"No buckets available."* line.
+        - Click on the available *bucket* in the dropdown.
+        - *Bucket* data should be loaded and displayed in the fields below.
+        - If errors occur, notifications at the top-right of the screen shoulld help to identify the problem.
+
+
+- **Subscriptions:**
 
