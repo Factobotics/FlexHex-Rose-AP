@@ -1,0 +1,57 @@
+{
+    // Url for InfluxDB
+    url: <influxDB>
+    // Organization inside the InfluxDB
+    org: <influxDB organization>
+    // Buckets list to define different buckets inside Organization
+    buckets: {
+        bucket1: {
+            // Token of the bucket
+            token: <token1>
+            // Measurements that will be directed to the bucket
+            measurements: {
+                measurement1: {
+                    /* 
+                        Data for the subscription
+
+                        Subscription entities, conditions and notifications will be based
+                            upon tags and fields defined in influx_data object
+                    */
+                    subscription_data: {
+                        /* 
+                            Entities list to create subscription
+
+                            Can be:
+                                - type or typePattern
+                                - id or idPattern
+                                - type + id - and vice versa
+                        */
+                        entities: [
+                            {
+                                type: some type
+                                id: some id
+                            }
+                        ]
+                        // Subscription delay between updates
+                        throttling: 5
+                    }
+                    /*
+                        Data for InfluxDB insert
+
+                        Subscription entities, conditions and notifications will be based
+                            upon tags and fields defined in influx_data object
+                    */
+                    influx_data: {
+                        tags: [
+                            attr1
+                        ]
+                        fields: [
+                            attr2
+                            attr3
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

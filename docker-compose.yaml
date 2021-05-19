@@ -1,0 +1,45 @@
+version: "3.7"
+
+services:
+  api:
+    build: API
+    environment:
+      - PORT=5000
+    ports:
+      - 5000:5000
+    volumes:
+        - ./logs/:/app/logs/
+    depends_on:
+      - redis
+        
+  orion:
+    image: fiware/orion
+    depends_on:
+      - mongo
+    ports:
+      - "1026:1026"
+    command: -dbhost mongo -insecureNotif
+
+  mongo:
+    image: mongo:3.6
+    command: --nojournal
+    
+  
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis:/data
+  # orion:
+  #   image: fiware/orion
+  #   depends_on:
+  #     - mongo
+  #   ports:
+  #     - "1026:1026"
+  #   command: -dbhost mongo -insecureNotif
+
+  # mongo:
+  #   image: mongo:3.6
+  #   command: --nojournal
+    

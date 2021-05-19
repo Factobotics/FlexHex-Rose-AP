@@ -1,0 +1,10 @@
+{"data":[{
+    "id": "hexapod1",
+    "platform_x": 0,
+    "platform_y": 0,
+    "platform_z": 0,
+    "metadata": {
+        "measurement": "hexapod_position"
+    }
+
+}]}

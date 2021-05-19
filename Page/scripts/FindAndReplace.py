@@ -1,0 +1,10 @@
+import sys
+fin = open(sys.argv[1], "rt")
+data = fin.read()
+print(sys.argv[2])
+print(sys.argv[3])
+data = data.replace(sys.argv[2], sys.argv[3])
+fin.close()
+fin = open(sys.argv[1], "wt")
+fin.write(data)
+fin.close()
