@@ -290,7 +290,7 @@ You can navigate pages using the NavBar on the left of the page.
     
     If you have created a **Organization** and **Bucket** inside Influx-db already and want to use it, you can create it in the module and assign the *measurement*.
 
-    - Creating organization inside Influx-db:
+    - Creating organization and bucket inside Influx-db:
 
         - Log-in to the Influx-db dashboard.
         - Navigate to new organization window.
@@ -303,8 +303,41 @@ You can navigate pages using the NavBar on the left of the page.
             - Bucket name: ```Test```
         - Click ```Create```
 
-    You now should have the necessary **Organization** and **Bucket** inside the Influx-db server.
+    You now should have the necessary **Organization** and **Bucket** inside of the Influx-db server.
 
-    The next step is to make updates to the entity that was created previously in the **[Orion Context Broker.](###Orion Context Broker.)** part of this short guide above.
+    The next step is to make updates to the entity that you created previously in the **Orion Context Broker.** part of this guide. This will triggeer the subscriptions that you created in **Using WEB interface.** **>Subscriptions** part of this guide.
+
+    - Updating the entity of Orion Context Broker:
+
+        - This can be done using one of the REST clients or tools that you installed in the [Installations steps](installationguide.md) or using curl requests in the terminal.
+        - The request:
+            - Path:
+                - ```<Orion Context Broker IP>:1026/v2/entities/<Your entity ID>/attrs?options=keyValues```
+            - Request type:
+                - ```PATCH```
+            - Request body:
+                - JSON format.
+                - Key, value pairs (with new values) that were defined when creating the entity.
+        - Examples:
+            - Example entity in almost any of the REST client/tool:
+
+                ```<PATCH REQUEST> to 192.168.0.50:1026/v2/entities/hexapod1/attrs?options=keyValues```
+                ``` 
+                {
+                    "platform_x": 1,
+                    "platform_y": 2,
+                    "platform_z": 3
+                }
+                ```
+            - Example using curl:
+                ```
+                curl 192.168.0.50:1026/v2/entities?options=keyValues -X PATCH -s -S -H 'Content-Type: application/json' -d @- <<EOF
+                {
+                    "platform_x": 1,
+                    "platform_y": 2,
+                    "platform_z": 3
+                }
+                EOF
+                ```
         
 
