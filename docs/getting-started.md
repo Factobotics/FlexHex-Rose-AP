@@ -2,7 +2,7 @@
 
 ### :warning: Short notice :warning:
 
-**Influx-db variables** variables in the **.env** file must be changed to your influx-db service variables. Other variables can be ignored to try out the module.
+**Influx-db variables** in the **.env** file must be changed to your influx-db service variables. Other variables can be ignored to try out the module.
 
 ### Configuring system dependent settings.
 
@@ -192,7 +192,7 @@ You can navigate pages using the NavBar on the left of the page.
 
     Defining *buckets* is the second step to be able to use the module.
 
-    *Bucket* defines where measurement will be placed. In a sense, *bucket* is a... bucket... a data sink, it can be filled with various data of various types. Then it can be quered, filtered and shaped into a more usable state to display in graphs.
+    *Bucket* defines where measurement will be placed. In a sense, *bucket* is a... bucket... a data sink, it can be filled with various data of various types. Then it can be quered, filtered and shaped into a more usable state to display in graphs. Yoou can read more about buckets [here](https://docs.influxdata.com/influxdb/v2.0/organizations/buckets/).
 
     When OCB subscription data is received and processed successfully, it searches if the *measurement* has valid *bucket* assigned.
 
@@ -210,31 +210,101 @@ You can navigate pages using the NavBar on the left of the page.
         - Click on the available *bucket* in the dropdown.
         - *Bucket* data should be loaded and displayed in the fields below.
         - If errors occur, notifications at the top-right of the screen shoulld help to identify the problem.
+
 
 - **Organizations:**
 
     Defining *organizations* is the third step to be able to use the module.
 
-    *Organization* defines which workspace to use in Influx-db. It is a logical segregation. An organization has seperate users groups, dashboards, tasks,  
-    measurement will be placed. In a sense, *bucket* is a... bucket... a data sink, it can be filled with various data of various types. Then it can be quered, filtered and shaped into a more usable state to display in graphs.
+    *Organization* defines which workspace to use in Influx-db. An organization has seperate user groups, dashboards, tasks, buckets and etc. You can read more about organizations inside Influx-db [here](https://docs.influxdata.com/influxdb/v2.0/organizations/).  
 
-    When OCB subscription data is received and processed successfully, it searches if the *measurement* has valid *bucket* assigned.
+    When Orion Context Broker subscription data is received and processed successfully and *measurement* had valid *bucket* assigned, then module tries to find *organization* that is assigned to the *bucket*.
 
-    You can define *buckets* in **Buckets** page.
+    You can define *organizations* in **Organizations** page.
 
-    - Check out available bucket and it's data:
+    - Check out available organization and it's data:
 
-        By default, there should be one bucket available. It should have assigned measurement already.
+        By default, there should be one organization available. It should have assigned bucket already.
         
-        You can check this bucket's data:
+        You can check this organization's data:
 
-        - Navigate to **Buckets** page, **Get bucket information** tab.
+        - Navigate to **Organizations** page, **Get organization information** tab.
         - Click the dropdown button.
-        - The available *bucket* should be loaded and seen as one of the options, if not there should be *"No buckets available."* line.
-        - Click on the available *bucket* in the dropdown.
-        - *Bucket* data should be loaded and displayed in the fields below.
+        - The available *organization* should be loaded and seen as one of the options, if not there should be *"No organizations available."* line.
+        - Click on the available *organization* in the dropdown.
+        - *Organization* data should be loaded and displayed in the fields below.
         - If errors occur, notifications at the top-right of the screen shoulld help to identify the problem.
 
 
 - **Subscriptions:**
+
+    Creating *subscriptions* is the last step to be able to use the module.
+
+    *Subscriptions* are created inside Orion Context Broker based on *measurements*. The subscriptions has triggers for entities and their properties. When entities change or get updated, subscriptions sends entity parameters to the defined end point. The end point in this case is this module. After processing the data received from subscription, the module uploads the data into Influx-db. More information about subscriptions can be found [here](https://telefonicaid.github.io/fiware-orion/api/v2/stable/) (in the Subscriptions reference). 
+
+    When subscription is being created, information about desired entity and it's parameters are gathered from measurement automatically. If all of the data is valid and module was successful in creating the body of a subscription, then the module checks if other subscriptions were available for the desired measurement. The outcome of this check:
+    - If no subscriptions were found - a new one is created.
+    - If subscription was found - the old one is updated (overwritten).
+    - If there were multiple subscriptions of the measurement - all of the duplicates will be deleted and new one will be created.
+    <br>
+
+    You can control *subscriptions* in **Subscriptions** page.
+
+    - Create subscription for selected measurement:
+
+        By default, there should be no subscriptions available, so you have to create it.
+        
+        To create subscription:
+
+        - Navigate to **Subscriptions** page, **Subscribe to measurement** tab.
+        - As subscriptions are based on *measurements*, you have to select the *measurement* to which you want to subscribe.
+        - Click the **dropdown** button below ```Measurement name```.
+        - The available *measurement* should be loaded and seen as one of the options, if not there should be *"No measurements available."* line.
+        - Click on the available *measurement* in the dropdown.
+        - The *dropdown* button text should be a *measurement* name.
+        - Click the ```Subscribe``` button.
+        - The *subscription* should be created and success notification will be displayed in the top-right corner of the screen.
+        - If errors occur, notifications at the top-right of the screen shoulld help to identify the problem.
+
+
+    - Check out available subscription and it's data after creating it:
+
+        By default, there should be no subscriptions available, so you have to create it.
+        
+        You can check this subscription's data:
+
+        - Navigate to **Subscriptions** page, **Show measurement subscription** tab.
+        - As subscriptions are based on *measurements*, you have to select the *measurement* which subscription you want to see.
+        - Click the **dropdown** button below ```Measurement name```.
+        - The available *measurement* should be loaded and seen as one of the options, if not there should be *"No measurements available."* line.
+        - Click on the available *measurement* in the dropdown.
+        - *Subscription* data should be loaded and displayed in the field below. It should be a JSON like object.
+        - If errors occur, notifications at the top-right of the screen shoulld help to identify the problem.
+
+
+- **Testing the module:**
+
+    To test this module, the next step is to create **Organization** and **Bucket** inside your Influx-db server. 
+    
+    The name of the **Organization** and **Bucket** should be the same as used in the module, or the uploading of the data into Influx-db may fail. 
+    
+    If you have created a **Organization** and **Bucket** inside Influx-db already and want to use it, you can create it in the module and assign the *measurement*.
+
+    - Creating organization inside Influx-db:
+
+        - Log-in to the Influx-db dashboard.
+        - Navigate to new organization window.
+            - Click on your user avatar in the navigation bar.
+            - Then click ```Create organization``` in the pop-up.
+            - or
+            - Just go to ```https://<your_influxdb_address>/orgs/new```
+        - Fill in the fields:
+            - Organization name: ```Test```
+            - Bucket name: ```Test```
+        - Click ```Create```
+
+    You now should have the necessary **Organization** and **Bucket** inside the Influx-db server.
+
+    The next step is to make updates to the entity that was created previously in the **[Orion Context Broker.](###Orion Context Broker.)** part of this short guide above.
+        
 
