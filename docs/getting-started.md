@@ -286,9 +286,11 @@ You can navigate pages using the navigation bar on the left of the page.
         - If errors occur, notifications at the top-right of the screen should help to identify the problem.
 <br>
 
-- **Testing the module:**
+### Influx-db:
 
-    To test this module, the next step is to create **Organization** and **Bucket** inside your Influx-db server. 
+- **Create *organizations* and *buckets*:**
+
+    To test/try this module, the next step is to create **Organization** and **Bucket** inside your Influx-db server. 
     
     The name of the **Organization** and **Bucket** should be the same as used in the module, or the uploading of the data into Influx-db may fail. 
     
@@ -319,42 +321,103 @@ You can navigate pages using the navigation bar on the left of the page.
     
     You now should have the necessary **Organization** and **Bucket** inside of the Influx-db server.
 
-    The next step is to make updates to the entity that you created previously in the **Orion Context Broker.** part of this guide. This will trigger the subscriptions that you created in **Using WEB interface.** **>Subscriptions** part of this guide.
+### Testing the module:
 
-    - Updating the entity of Orion Context Broker:
+The next step is to make updates to the entity that you created previously in the **Orion Context Broker.** part of this guide. This will trigger the subscriptions that you created in **Using WEB interface.** **>Subscriptions** part of this guide.
 
-        - This can be done using one of the REST clients or tools that you installed in the [Installations steps](installationguide.md) or using curl requests in the terminal.
-        - The request:
-            - Path:
-                - ```<Orion Context Broker IP>:1026/v2/entities/<Your entity ID>/attrs?options=keyValues```
-            - Request type:
-                - ```PATCH```
-            - Request body:
-                - JSON format.
-                - Key, value pairs (with new values) that were defined when creating the entity.
-        - Examples:
+- Updating the entity of Orion Context Broker:
 
-            :warning: Please change at least one **platform_*** value every time request is made. Othervise it won't be updated.
+    - This can be done using one of the REST clients or tools that you installed in the [Installations steps](installationguide.md) or using curl requests in the terminal.
+    - The request:
+        - Path:
+            - ```<Orion Context Broker IP>:1026/v2/entities/<Your entity ID>/attrs?options=keyValues```
+        - Request type:
+            - ```PATCH```
+        - Request body:
+            - JSON format.
+            - Key, value pairs (with new values) that were defined when creating the entity.
+    - Examples:
 
-            - Example entity in almost any of the REST client/tool:
+        - Example entity in almost any of the REST client/tool:
 
-                ```<PATCH REQUEST> to 192.168.0.50:1026/v2/entities/hexapod1/attrs?options=keyValues```
-                ``` 
-                {
-                    "platform_x": 1,
-                    "platform_y": 2,
-                    "platform_z": 3
-                }
-                ```
-            - Example using curl:
-                ```
-                curl 192.168.0.50:1026/v2/entities?options=keyValues -X PATCH -s -S -H 'Content-Type: application/json' -d @- <<EOF
-                {
-                    "platform_x": 1,
-                    "platform_y": 2,
-                    "platform_z": 3
-                }
-                EOF
-                ```
-        
+            ```<PATCH REQUEST> to 192.168.0.50:1026/v2/entities/hexapod1/attrs?options=keyValues```
+            ``` 
+            {
+                "platform_x": 1,
+                "platform_y": 2,
+                "platform_z": 3
+            }
+            ```
+        - Example using curl:
+            ```
+            curl 192.168.0.50:1026/v2/entities?options=keyValues -X PATCH -s -S -H 'Content-Type: application/json' -d @- <<EOF
+            {
+                "platform_x": 1,
+                "platform_y": 2,
+                "platform_z": 3
+            }
+            EOF
+            ```
 
+    :warning: Please change at least one **platform_*** value every time request is made. Othervise it won't be updated.
+    :warning: One or all of the entity variables can be updated at a time.
+
+Final step is to check out the results if the module actually did what it supposed to and uploaded data into **Influx-db**.
+
+- **Explore Influx-db:**
+    - Navigate to Influx-db: ```<Your IP>:8086```
+        - Example: ```http://192.168.0.50:8086```
+        <br>
+
+    - Log-in to the Influx-db dashboard. 
+        - If ```docker-compose.yml``` **Influx-db** service was unchanged - ID: ```admin```, PW: ```admin1234```
+        <br>
+
+    - Navigate to **Explore** page. Should be available on the navigation bar that is on the left of the screen.
+    - :warning: Below ```Data explorer``` page header, change from ```Graph``` to ```Table``` visualization of the data.
+    - Select appropriate time range in the ```Time input```, so the data would be available inside the range selected.
+    - Click ```Script editor```.
+    - In the **Editor** window, paste:
+        ```
+        from(bucket: "Test")
+            |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+            |> filter(fn: (r) => r["_measurement"] == "hexapod_position")
+            |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")
+            |> keep(columns: ["_time", "_measurement", "hexapod", "x", "y", "z"])
+            |> yield()
+        ```
+    - Click ```Submit```.
+    - Data should be visible.
+    - You can switch data visualization to ```Graph``` mode, to see changes overtime.
+        - Replace **Editor** window text:
+            ```
+            from(bucket: "Test")
+                |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+                |> filter(fn: (r) => r["_measurement"] == "hexapod_position")
+                |> yield()
+            ```
+    <br>
+    
+- No data visible
+    - If no data is visible, please adjust time range to a wider scope.
+    - If no data is still shown, replace **Editor** window text:
+        ```
+        from(bucket: "Test")
+            |> range(start: -100y, stop: 100y)
+            |> filter(fn: (r) => r["_measurement"] == "hexapod_position")
+            |> yield()
+        ```
+    - If no data is still shown, replace **Editor** window text:
+
+        :warning: Replace bucket and measurement name.
+        ```
+        from(bucket: <Your bucket>)
+            |> range(start: -100y, stop: 100y)
+            |> filter(fn: (r) => r["_measurement"] == <Your measurement name>)
+            |> yield()
+        ```
+    - If no data is still shown:
+        - Browse the logs in the terminal to figure out why and what crashed.
+        - Browse logs in the ```rose-ap/API/app/logs```, for the module logs to look for errors.
+        - Go to [Trouble shooting](trouble-shooting.md) documentation page for known bugs.
+    <br>
