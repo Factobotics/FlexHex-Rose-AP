@@ -1,9 +1,5 @@
 # Getting started
 
-### :warning: Short notice :warning:
-
-**Influx-db variables** in the **.env** file must be changed to your influx-db service variables. Other variables can be ignored to try out the module.
-
 ### Configuring system dependent settings.
 
 Files can be edited with text editor of your choice (Notepad, Notepad++, VSCode, Nano, Atom).
@@ -16,11 +12,14 @@ Files can be edited with text editor of your choice (Notepad, Notepad++, VSCode,
         - **orion**: Orion Context Broker.
         - **mongo**: MongoDB database for Orion Context Broker.
         - **redis**: Redis database for application data storage.
+        - **influxdb**: InfluxDB instance.
+    <br>
     
 - **Dockerfiles** - Files defining Docker containers
     - file locations:  
     ```rose-ap/API/Dockerfile```
-    
+    <br>
+
 - **.env** - Configuration file for project application.
 
     There is no need to edit this file to try the module. This **file can be hidden** so you might need to adjust your system settings.
@@ -30,6 +29,7 @@ Files can be edited with text editor of your choice (Notepad, Notepad++, VSCode,
     - **Variables**:
         - **General variables**:
             - PRINT_CONFIG - If set to *true*, prints the whole configuration when application workers start.
+            - DEMO - Load data for demonstration.
         - **Logging variables**:
             - LOGS_LEVEL - Logging level. Default - NOTSET. Available - NOTSET, DEBUG, INFO, WARNING, CRITICAL.
             - LOGS_PATH - Path of the log file. **docker-compose.yaml** must be updated accordingly, so the log files would be exposed outside of the container.
@@ -59,7 +59,7 @@ Files can be edited with text editor of your choice (Notepad, Notepad++, VSCode,
 
 - Open terminal 
     - Linux users: **```CTRL + SHIFT + T```**
-    - Windows users: **```Windows key + X```** and then press **A** key (For administrator access).
+    - Windows users: **```Windows key + X```** and then press **A** key.
 - Navigate to **rose-ap** folder.
 - Launch the docker compose:  
     ```docker-compose up --build```  
@@ -80,6 +80,7 @@ Files can be edited with text editor of your choice (Notepad, Notepad++, VSCode,
     - Windows users (in terminal / command prompt):  
         ```ipconfig /all```  
 - Open your (computer or docker host) address via web-browser.
+    - ```http://<your IP>:5000```
     - :warning: Add the **5000** port number to the address.
     - Example:
         - ```http://192.168.0.50:5000```
@@ -109,13 +110,15 @@ Orion Context Broker API user guide can be found [here](https://fiware-orion.rea
     
     Create as many entities as you want, assign **id** and **type** and other desired data. 
     
-    :warning: Most importantly, the module requires entities to have ***metadata*** object with ***measurement*** key.
+    :warning: Most importantly, the module requires entities to have ***metadata*** object with ***measurement*** key and value as desired measurement name.
     
     This is used to identify measurement of the entity when the subscription sends data to the module's end point.
     
     To the entity variable, just add ```"metadata": {"measurement": <measurement name>}``` while creating it.
 
-    - Example entity in almost any of the REST client/tool:
+    :warning: Example below can fail (Entity Exists), if *.env* files **DEMO** variable was set to **True** as it will create this entity automatically.
+
+    - Example entity that can be created in almost any of the REST client/tool:
 
         ```<POST REQUEST> to 192.168.0.50:1026/v2/entities?options=keyValues```
         ``` 
@@ -163,7 +166,7 @@ Orion Context Broker API user guide can be found [here](https://fiware-orion.rea
 
 By default, you will be greeted with the welcome landing page, shortly describing further steps and other pages.
 
-You can navigate pages using the NavBar on the left of the page. 
+You can navigate pages using the navigation bar on the left of the page. 
 
 - **Measurements:**
 
@@ -177,22 +180,23 @@ You can navigate pages using the NavBar on the left of the page.
 
     - Check out available measurement and it's data:
 
-        By default, there should be one measurement available. It should be compatible with your created entity, if you used the provided example above. 
+        By default, there should be one measurement available. It should be compatible with your created entity ( from example above ) or the loaded entity by default if **DEMO** variable was set to **True** in **.env** file. 
         
         You can check this measurement data:
 
         - Navigate to **Measurements** page, **Get measurement information** tab.
-        - Click the dropdown button.
+        - Click the **dropdown** button below ```Measurement name```.
         - The available *measurement* should be loaded and seen as one of the options, if not there should be *"No measurements available."* line.
         - Click on the available measurement in the dropdown.
         - *Measurement* data should be loaded and displayed in the fields below.
-        - If errors occur, notifications at the top-right of the screen shoulld help to identify the problem.
+        - If errors occur, notifications at the top-right of the screen should help to identify the problem.
+<br>
 
 - **Buckets:**
 
     Defining *buckets* is the second step to be able to use the module.
 
-    *Bucket* defines where measurement will be placed. In a sense, *bucket* is a... bucket... a data sink, it can be filled with various data of various types. Then it can be quered, filtered and shaped into a more usable state to display in graphs. Yoou can read more about buckets [here](https://docs.influxdata.com/influxdb/v2.0/organizations/buckets/).
+    *Bucket* defines where measurement will be placed. In a sense, *bucket* is a... bucket... a data sink, it can be filled with various data of various types. Then it can be quered, filtered and shaped into a more usable state to display in graphs. You can read more about buckets [here](https://docs.influxdata.com/influxdb/v2.0/organizations/buckets/).
 
     When OCB subscription data is received and processed successfully, it searches if the *measurement* has valid *bucket* assigned.
 
@@ -205,12 +209,12 @@ You can navigate pages using the NavBar on the left of the page.
         You can check this bucket's data:
 
         - Navigate to **Buckets** page, **Get bucket information** tab.
-        - Click the dropdown button.
+        - Click the **dropdown** button below ```Bucket name```.
         - The available *bucket* should be loaded and seen as one of the options, if not there should be *"No buckets available."* line.
         - Click on the available *bucket* in the dropdown.
         - *Bucket* data should be loaded and displayed in the fields below.
-        - If errors occur, notifications at the top-right of the screen shoulld help to identify the problem.
-
+        - If errors occur, notifications at the top-right of the screen should help to identify the problem.
+<br>
 
 - **Organizations:**
 
@@ -229,18 +233,18 @@ You can navigate pages using the NavBar on the left of the page.
         You can check this organization's data:
 
         - Navigate to **Organizations** page, **Get organization information** tab.
-        - Click the dropdown button.
+        - Click the **dropdown** button below ```Organization name```.
         - The available *organization* should be loaded and seen as one of the options, if not there should be *"No organizations available."* line.
         - Click on the available *organization* in the dropdown.
         - *Organization* data should be loaded and displayed in the fields below.
-        - If errors occur, notifications at the top-right of the screen shoulld help to identify the problem.
-
+        - If errors occur, notifications at the top-right of the screen should help to identify the problem.
+<br>
 
 - **Subscriptions:**
 
     Creating *subscriptions* is the last step to be able to use the module.
 
-    *Subscriptions* are created inside Orion Context Broker based on *measurements*. The subscriptions has triggers for entities and their properties. When entities change or get updated, subscriptions sends entity parameters to the defined end point. The end point in this case is this module. After processing the data received from subscription, the module uploads the data into Influx-db. More information about subscriptions can be found [here](https://telefonicaid.github.io/fiware-orion/api/v2/stable/) (in the Subscriptions reference). 
+    *Subscriptions* are created inside Orion Context Broker are based on *measurements*. The subscriptions has triggers for entities and their properties. When entities change or get updated, subscriptions sends entity parameters to the defined end point. The end point in this case is this module. After processing the data received from subscription, the module uploads the data into Influx-db. More information about subscriptions can be found [here](https://telefonicaid.github.io/fiware-orion/api/v2/stable/) (in the Subscriptions reference). 
 
     When subscription is being created, information about desired entity and it's parameters are gathered from measurement automatically. If all of the data is valid and module was successful in creating the body of a subscription, then the module checks if other subscriptions were available for the desired measurement. The outcome of this check:
     - If no subscriptions were found - a new one is created.
@@ -264,14 +268,14 @@ You can navigate pages using the NavBar on the left of the page.
         - The *dropdown* button text should be a *measurement* name.
         - Click the ```Subscribe``` button.
         - The *subscription* should be created and success notification will be displayed in the top-right corner of the screen.
-        - If errors occur, notifications at the top-right of the screen shoulld help to identify the problem.
+        - If errors occur, notifications at the top-right of the screen should help to identify the problem.
 
 
     - Check out available subscription and it's data after creating it:
 
         By default, there should be no subscriptions available, so you have to create it.
         
-        You can check this subscription's data:
+        You can check your created subscription's data:
 
         - Navigate to **Subscriptions** page, **Show measurement subscription** tab.
         - As subscriptions are based on *measurements*, you have to select the *measurement* which subscription you want to see.
@@ -279,8 +283,8 @@ You can navigate pages using the NavBar on the left of the page.
         - The available *measurement* should be loaded and seen as one of the options, if not there should be *"No measurements available."* line.
         - Click on the available *measurement* in the dropdown.
         - *Subscription* data should be loaded and displayed in the field below. It should be a JSON like object.
-        - If errors occur, notifications at the top-right of the screen shoulld help to identify the problem.
-
+        - If errors occur, notifications at the top-right of the screen should help to identify the problem.
+<br>
 
 - **Testing the module:**
 
@@ -290,22 +294,32 @@ You can navigate pages using the NavBar on the left of the page.
     
     If you have created a **Organization** and **Bucket** inside Influx-db already and want to use it, you can create it in the module and assign the *measurement*.
 
+    :warning: By default ```docker-compose.yml``` file has defined first launch mode and variables used for setup. It will create default user, organization and bucket. The steps below can be different, if ```docker-compose.yml``` **influx-db** service was altered. You may need to set up Influx-db the first time you enter the page.
+
     - Creating organization and bucket inside Influx-db:
 
-        - Log-in to the Influx-db dashboard.
+        - Navigate to Influx-db: ```<Your IP>:8086```
+            - Example: ```http://192.168.0.50:8086```
+        - Log-in to the Influx-db dashboard. 
+            - If ```docker-compose.yml``` **Influx-db** service was changed - You may be greeted by first time setup page. In that case, fill all the required fields like in to ```Fill in the fields``` step below. Additionally choose your desired user ID and password.
+            - If ```docker-compose.yml``` **Influx-db** service was unchanged - ID: ```admin```, PW: ```admin1234```
         - Navigate to new organization window.
             - Click on your user avatar in the navigation bar.
             - Then click ```Create organization``` in the pop-up.
             - or
-            - Just go to ```https://<your_influxdb_address>/orgs/new```
+            - Just go to ```http://<your_influxdb_address>/orgs/new```
+                - Example: ```http://192.168.0.50/orgs/new```
         - Fill in the fields:
             - Organization name: ```Test```
+                - If ```docker-compose.yml``` **Influx-db** service was unchanged: It should have been created.
             - Bucket name: ```Test```
+                - If ```docker-compose.yml``` **Influx-db** service was unchanged: It should have been created.
         - Click ```Create```
-
+    <br>
+    
     You now should have the necessary **Organization** and **Bucket** inside of the Influx-db server.
 
-    The next step is to make updates to the entity that you created previously in the **Orion Context Broker.** part of this guide. This will triggeer the subscriptions that you created in **Using WEB interface.** **>Subscriptions** part of this guide.
+    The next step is to make updates to the entity that you created previously in the **Orion Context Broker.** part of this guide. This will trigger the subscriptions that you created in **Using WEB interface.** **>Subscriptions** part of this guide.
 
     - Updating the entity of Orion Context Broker:
 
@@ -319,6 +333,9 @@ You can navigate pages using the NavBar on the left of the page.
                 - JSON format.
                 - Key, value pairs (with new values) that were defined when creating the entity.
         - Examples:
+
+            :warning: Please change at least one **platform_*** value every time request is made. Othervise it won't be updated.
+
             - Example entity in almost any of the REST client/tool:
 
                 ```<PATCH REQUEST> to 192.168.0.50:1026/v2/entities/hexapod1/attrs?options=keyValues```
