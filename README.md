@@ -30,12 +30,12 @@ It tries to do so via WEB interface and for more advanced use cases - API.
 
 Currently there are four main parts that user/operator can control:
 
-- Measurements - Measurement to be processed from incoming Orion Context Broker (further - OCB) subscription data and uploaded into influx-db. User defines entities and their types for the OCB subscription. Also fields and tags to gather from the OCB entity.
+- Measurements - Measurement to be processed from incoming Orion Context Broker subscription data and uploaded into influx-db. User defines entities and their types for the OCB subscription. Also fields and tags to gather from the OCB entity.
 - Buckets - Used to define buckets of the influx-db. Allows to assign different measurements.
 - Organizations -  Used to define organizations of the influx-db. Allows to assign different buckets.
-- Subscriptions - Used to control selected measurement subscription. CRUD principle. Main use case - automatically form the required subscription for the selected measurement and post it to OCB.
+- Subscriptions - Used to control selected measurement subscription. CRUD principle. Main use case - automatically form the required subscription for the selected measurement and post it to Orion Context Broker.
 
-It is based on OCB entities and subscriptions, and is NGSIv2 compliant to process the incoming data into Line Protocol for influx-db.
+It is based on Orion Context Broker entities and subscriptions, and is NGSIv2 compliant to process the incoming data into Line Protocol for influx-db.
 
 
 ## Install
