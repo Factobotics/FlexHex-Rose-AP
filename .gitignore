@@ -3,3 +3,5 @@
 __pycache__
 *.rdb
 Page/files
+influxdb2
+redis
