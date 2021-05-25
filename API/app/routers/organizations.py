@@ -33,11 +33,11 @@ async def get_organizations(request: Request):
 @router.get("/get_organization/{org}")
 async def get_organization(request: Request, org: str):
     """
-    ## Get orgnization object of the selected organization.
+    ## Get data of the selected organization.
     
-    Returns organization object with key as organization name and value as organization data.
+    Returns object with key as organization name and value as organization data.
 
-    - **org**: measurement name.
+    - **org**: organization name.
     """
 
     redis = request.app.state.redis
@@ -53,6 +53,8 @@ async def get_organization(request: Request, org: str):
 async def add_organization(request: Request, data: dict):
     """
     ## Create a new organization.
+
+    Organization has to exists inside Influx-db.
 
     - **data**:
         - **organization**: new organization name.
@@ -75,7 +77,7 @@ async def update_organization(request: Request, org: str, data: dict):
 
     - **org**: organization name.
     - **data**:
-        - **organization_data**: orgnization data to be overwrite existing one.
+        - **organization_data**: orgnization data to overwrite the existing one.
     """
     redis = request.app.state.redis
     organizations = orjson.loads(await redis.get_key("influxdb_organizations"))

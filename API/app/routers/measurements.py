@@ -33,9 +33,9 @@ async def get_measurements(request: Request):
 @router.get("/get_measurement/{measurement}")
 async def get_measurement(request: Request, measurement: str):
     """
-    ## Get measurement object of the selected measurement.
+    ## Get data of the selected measurement.
     
-    Returns measurement object with key as measurement name and value as measurement data.
+    Returns object with key as measurement name and value as measurement data.
 
     - **measurement**: measurement name.
     """
@@ -52,6 +52,8 @@ async def get_measurement(request: Request, measurement: str):
 async def add_measurement(request: Request, data: dict):
     """
     ## Create a new measurement.
+
+    Measurement has to exists inside Influx-db.
 
     - **data**:
         - **measurement**: new measurement name.
@@ -75,7 +77,7 @@ async def update_measurement(request: Request, measurement: str, data: dict):
 
     - **measurement**: measurement name.
     - **data**:
-        - **measurement_data**: measurement data to be overwrite existing one.
+        - **measurement_data**: measurement data to overwrite the existing one.
     """
 
     redis = request.app.state.redis

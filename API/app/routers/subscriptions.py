@@ -197,7 +197,9 @@ async def subscribe_to_measurement(request: Request, measurement: str):
 @router.get("/get_measurement_subscription/{measurement}")
 async def get_measurement_subscription(request: Request, measurement: str):
     """
-    ## Get subscription object of the selected measurement.
+    ## Get data of the selected measurement subscription.
+
+    Returns response from Orion Context Broker about subscription.
 
     - **measurement**: measurement name.
     """
