@@ -45,15 +45,4 @@ services:
       - DOCKER_INFLUXDB_INIT_ORG=${DOCKER_INFLUXDB_INIT_ORG}
       - DOCKER_INFLUXDB_INIT_BUCKET=${DOCKER_INFLUXDB_INIT_BUCKET}
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${DOCKER_INFLUXDB_INIT_ADMIN_TOKEN}
-  # orion:
-  #   image: fiware/orion
-  #   depends_on:
-  #     - mongo
-  #   ports:
-  #     - "1026:1026"
-  #   command: -dbhost mongo -insecureNotif
-
-  # mongo:
-  #   image: mongo:3.6
-  #   command: --nojournal
     
