@@ -14,7 +14,22 @@ Files can be edited with text editor of your choice (Notepad, Notepad++, VSCode,
         - **redis**: Redis database for application data storage.
         - **influxdb**: InfluxDB instance.
     <br>
-    
+
+- **.env** - Configuration file for ```rose-ap/docker-compose.yaml```.
+
+    This **file can be hidden** so you might need to adjust your system settings.
+
+    - **File location**:  
+    ```rose-ap/.env```  
+    - **Variables**:
+        - DOCKER_INFLUXDB_INIT_MODE - Launch mode of the container. Can be setup or upgrade. Setup prepares the Influx-db for demo, upgrade - upgrades Influx-db from 1.x to 2.x.
+        - DOCKER_INFLUXDB_INIT_USERNAME - Default users username.
+        - DOCKER_INFLUXDB_INIT_PASSWORD - Default users password.
+        - DOCKER_INFLUXDB_INIT_ORG - Default organization.
+        - DOCKER_INFLUXDB_INIT_BUCKET - Default bucket of default organization.
+        - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN - Access token for the default user. Can access and edit everything.
+    <br>
+
 - **Dockerfiles** - Files defining Docker containers
     - file locations:  
     ```rose-ap/API/Dockerfile```
