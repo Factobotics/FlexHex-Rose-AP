@@ -45,11 +45,12 @@ How to install the component
 Information about how to install the FlexHex ROSE-AP can be found at the corresponding section of the
 [Installation & Administration Guide](docs/installationguide.md).
 
-## Usage
+## Quickstart and usage guide
 
 How to use the component
 
-Information about how to use the FlexHex ROSE-AP can be found in the [User & Programmers Manual](docs/usermanual.md).
+Information about how to use the FlexHex ROSE-AP can be found in the [Getting Started guide](docs/getting-started.md).
+
 
 ## API
 
