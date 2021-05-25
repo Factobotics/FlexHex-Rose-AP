@@ -13,6 +13,9 @@ levels = {'CRITICAL' : logging.CRITICAL,
     'NOTSET' : logging.NOTSET
 }
 
+demo = False
+if os.getenv('DEMO', False).lower() in ('true', '1', 't'):
+  demo = True
 
 logs_level = logging.NOTSET
 if os.getenv('LOGS_LEVEL').upper() in levels:
