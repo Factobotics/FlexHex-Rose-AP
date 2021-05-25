@@ -4,6 +4,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 import logging, traceback, sys, orjson
 from logging.handlers import RotatingFileHandler
+import httpx
 
 import config
 from helpers.CustomFormatter import CustomFormatter
@@ -49,9 +50,9 @@ influxdb_server = {
   "url": "{}://{}:{}".format(config.influxdb_protocol, config.influxdb_ip, config.influxdb_port)
 }
 
-influxdb_organizations = { "Hexon": { "buckets": [ "Hexon", "Hexon" ] } }
+influxdb_organizations = { "Test": { "buckets": [ "Test"] } }
 
-influxdb_buckets = { "Hexon": { "measurements": [ "hexapod_position", "hexapod_position" ] } }
+influxdb_buckets = { "Test": { "measurements": [ "hexapod_position"] } }
 
 influxdb_measurements = { "hexapod_position": { "subscription_data": { "entities": [ { "id": ".", "id_type": "pattern", "type": "Hexapod", "type_type": "pattern" } ], "throttling": 0 }, "influx_data": { "tags": { "hexapod": "id" }, "fields": { "x": "platform_x", "y": "platform_y", "z": "platform_z" } } } }
 
@@ -77,6 +78,17 @@ async def startup_event():
   if not await redis.get_key("influxdb_measurements"):
     await redis.set_key("influxdb_measurements", orjson.dumps(influxdb_measurements))
   logger.info("ROSE-AP init finished. App started.")
+
+  if config.demo == True:
+    async with httpx.AsyncClient() as client:
+      body = {"id": "hexapod1", "type": "Hexapod", "platform_x": 0, "platform_y": 0,
+              "platform_z": 0, "metadata": {"measurement": "hexapod_position"}}
+      resp = await client.post("{}://{}:{}/v2/entities?options=keyValues".format(config.ocb_http_protocol, config.ocb_ip, config.ocb_port), 
+      json=body)
+      if resp.status_code != 200 or resp.status_code != 200 and resp.json()["description"] == "Already Exists":
+        logger.debug("Demo entity created!")
+      else:
+        logger.warning("Failed to create demo entity!")
 
 
 @app.get("/", response_class=HTMLResponse, tags=["main"])
@@ -124,7 +136,8 @@ async def end_point(subscription_data: dict):
     raise HTTPException(
       status_code=500, detail="Organizations config undefined.")
 
-  records = []
+  # records = []
+  records = {}
   found_org = False
   
   measurements = orjson.loads(await redis.get_key("influxdb_measurements"))
@@ -179,7 +192,14 @@ async def end_point(subscription_data: dict):
             logger.debug(["Measurement temp: ", measurement_temp])
             logger.debug(["Measurement: ", measurement])
             insert_object["time"] = iso_time(get_time())
-            records.append(insert_object)
+            # records.append(insert_object)
+            if not records.get(org): 
+              records[org] = {}
+            if not records.get(org).get(bucket):
+              records[org][bucket] = []
+            records[org][bucket].append(insert_object)
+    
+    logger.debug(["Records:", records])
 
     if not found_org:
       logger.error("No organizations or buckets matched for {} measurement.".format(measurement))
@@ -187,7 +207,11 @@ async def end_point(subscription_data: dict):
   
   logger.info("Trying to push data to InfluxDB...")
   influxdb = app.state.influxdb
-  influxdb.write_data(org=org, bucket=bucket, records=records)
+
+  for org in records:
+    for bucket in records[org]:
+      influxdb.write_data(org=org, bucket=bucket, records=records[org][bucket])
+
   logger.info("Successfully inserted data into InfluxDB.")
   return HTMLResponse(content="Successfully inserted data into InfluxDB.", status_code=200)
 
