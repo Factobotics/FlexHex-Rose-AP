@@ -76,9 +76,11 @@ Files can be edited with text editor of your choice (Notepad, Notepad++, VSCode,
     - Linux users: **```CTRL + SHIFT + T```**
     - Windows users: **```Windows key + X```** and then press **A** key.
 - Navigate to **rose-ap** folder.
+
+    ```cd rose-ap```
 - Launch the docker compose:  
     ```docker-compose up --build```  
-- It can take some time for all of the images to be pulled from the internet and then builded, so please be patient.
+- It can take some time for all of the images to be pulled from the internet and then built, so please be patient. It can take up to 5 minutes on 100MB/s internet.
 - Expected behavior:
     - A lot of logs should be appearing in the terminal.
     - While browsing the terminal it should be seen that *api 1, mongo 1, orion 1* and *redis 1* containers are running and none of them exited due to error. 
@@ -112,16 +114,16 @@ Orion Context Broker API user guide can be found [here](https://fiware-orion.rea
         - ```http://192.168.0.50:1026/version```
 <br>
 
-- **To check and create required OCB entities**:
+- **To check and create required Orion Context Broker entities**:
     - Go to:
         - ```<your IP address>:1026/v2/entities```
     - Example:
         - ```http://192.168.0.50:1026/v2/entities```
     <br>
 
-    After going through the OCB user guide, you will be somewhat familiar with the Orion Context Broker and comfortable enough to create some entities. 
+    After going through the Orion Context Broker user guide, you will be somewhat familiar with the Orion Context Broker and comfortable enough to create some entities. 
     
-    This can be done using one of the REST clients or tools that you installed in the [Installations steps](installationguide.md) or using curl requests in the terminal. 
+    This can be done using one of the [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) clients or tools that you installed in the [Installations steps](installationguide.md) or using curl requests in the terminal. More information about curl [here](https://en.wikipedia.org/wiki/CURL).
     
     Create as many entities as you want, assign **id** and **type** and other desired data. 
     
@@ -165,7 +167,7 @@ Orion Context Broker API user guide can be found [here](https://fiware-orion.rea
         ```
 <br>
 
-- **To check OCB subscriptions**:
+- **To check Orion Context Broker subscriptions**:
     - Go to:
         - ```<your IP address>:1026/v2/subscriptions```
     - Example:
@@ -213,7 +215,7 @@ You can navigate pages using the navigation bar on the left of the page.
 
     *Bucket* defines where measurement will be placed. In a sense, *bucket* is a... bucket... a data sink, it can be filled with various data of various types. Then it can be quered, filtered and shaped into a more usable state to display in graphs. You can read more about buckets [here](https://docs.influxdata.com/influxdb/v2.0/organizations/buckets/).
 
-    When OCB subscription data is received and processed successfully, it searches if the *measurement* has valid *bucket* assigned.
+    When Orion Context Broker subscription data is received and processed successfully, it searches if the *measurement* has valid *bucket* assigned.
 
     You can define *buckets* in **Buckets** page.
 
