@@ -22,7 +22,7 @@
     - Docker-compose installation for **Linux** users [guide](https://docs.docker.com/compose/install/#linux).
 <br>
 
-- #### Web browser for WEB interface or API tool / REST client for module API
+- #### Web browser for WEB interface or API tool / [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) client for module API
     - **Browsers**
         - [Google Chrome](https://www.google.com/chrome/)
         - [Microsoft Edge](https://www.microsoft.com/en-us/edge)

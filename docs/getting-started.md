@@ -123,7 +123,7 @@ Orion Context Broker API user guide can be found [here](https://fiware-orion.rea
 
     After going through the Orion Context Broker user guide, you will be somewhat familiar with the Orion Context Broker and comfortable enough to create some entities. 
     
-    This can be done using one of the REST clients or tools that you installed in the [Installations steps](installationguide.md) or using curl requests in the terminal. 
+    This can be done using one of the [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) clients or tools that you installed in the [Installations steps](installationguide.md) or using curl requests in the terminal. 
     
     Create as many entities as you want, assign **id** and **type** and other desired data. 
     
