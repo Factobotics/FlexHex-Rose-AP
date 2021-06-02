@@ -1,6 +1,6 @@
 # FlexHex ROSE-AP
 
-[![License: MIT](https://img.shields.io/github/license/ramp-eu/TTE.project1.svg)](https://opensource.org/licenses/MIT)
+[![License: Apache 2.0](https://img.shields.io/github/license/ramp-eu/TTE.project1.svg)](https://opensource.org/licenses/Apache-2.0)
 <br/>
 [![Documentation Status](https://readthedocs.org/projects/flexhex_rose-ap/badge/?version=latest)](https://flexhex_rose-ap.readthedocs.io/en/latest/?badge=latest)
 
@@ -65,4 +65,4 @@ TBD
 
 ## License
 
-[MIT](LICENSE) © <TTE>
+[Apache 2.0](LICENSE) © <TTE>
