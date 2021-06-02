@@ -1,85 +1,68 @@
-# Mid-Term Review
+# FlexHex ROSE-AP
+
+[![License: Apache 2.0](https://img.shields.io/github/license/Factobotics/FlexHex-Rose-AP)](https://opensource.org/licenses/Apache-2.0)
+<br/>
+[![Documentation Status](https://readthedocs.org/projects/flexhex_rose-ap/badge/?version=latest)](https://flexhex_rose-ap.readthedocs.io/en/latest/?badge=latest)
+
+ROSE-AP of the FlexHex project tries to make data gathering from Orion Context Broker entities to influx-db easier.
+
+This project is part of [DIH^2](http://www.dih-squared.eu/). For more information check the RAMP Catalogue entry for the
+[components](https://github.com/ramp-eu).
+
+| :books: [Documentation](https://flexhex_rose-ap.readthedocs.io/en/latest/) |
+| --------------------------------------------- |
+
 
 ## Contents
 
 -   [Background](#background)
-    -   [Use Case Description](#use-case-description)
-    -   [Proposed Solution](#proposed-solution)
--   [Mid-Term Setup Implementation Description](#mid-term-setup-implementation-description)
--   [Demo](#demo)
-    -   [Install](#install)
-    -   [Usage](#usage)
-    -   [API](#api)
-    -   [Testing](#testing)
+-   [Install](#install)
+-   [Usage](#usage)
+-   [API](#api)
+-   [Testing](#testing)
 -   [License](#license)
 
 ## Background
 
-#### Use Case Description
+Data gathering can be cumbersome sometimes. This module tries to solve and simplify it. To make data gathering to influx-db a bit easier.
 
-#### Proposed Solution
+It tries to do so via WEB interface and for more advanced use cases - API.
 
-## Setup Overview
-```
-Overview the Docker-Based Implementation contributed in this Setup (This section is associated with the slide "Setup Overview: Docker-based Implementation" in D3)
-```
+Currently there are four main parts that user/operator can control:
 
-#### Architecture
-A more detailed description of this architecture is available here [Architecture Description](architecture.md)
-```
-(This section is associated with the slide "Setup Overview: Architecture" in D3)
-```
+- Measurements - Measurement to be processed from incoming Orion Context Broker subscription data and uploaded into influx-db. User defines entities and their types for the Orion Context Broker subscription. Also fields and tags to gather from the Orion Context Broker entity.
+- Buckets - Used to define buckets of the influx-db. Allows to assign different measurements.
+- Organizations -  Used to define organizations of the influx-db. Allows to assign different buckets.
+- Subscriptions - Used to control selected measurement subscription. [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) (Create, read, update and delete) principle. Main use case - automatically form the required subscription for the selected measurement and post it to Orion Context Broker.
 
-```
-Background information and links to relevant terms
-```
-## Demo
-#### Install
-In order to install the components of our demo, follow the instructions provided in this file: [Installation & Administration Guide](installationguide.md)
-```
-Within the docs folder, the "installationguide.md" is to be filled with information on how to install the demo components
-and their dependencies.
-
-A convenient simulator or simulated/dummy datasets will be contributed when the source code, binaries, and/or functionality
-of a given component cannot be shared as part of the public demo due to privacy- or deployment-related issues.
-```
-
-#### Usage
-Information about how to use the demo components can be found in the [User & Programmers Manual](usermanual.md).
-```
-Within the docs folder, the "installationguide.md" is to be filled with information on how to use and configure the
-components of the demo.
-```
-
-#### API
-Detailed descriptions of the demo component APIs are available in the [API documentation](api.md) 
-```
-Within the docs folder, the "api.md" is to be filled with the definition of component APIs.
-
-Special emphasis will be put on the description of NGSI APIs, providing tas many details as possible on the 
-the subscriptions, registrations, requests, and responses associated with each component of the demo. 
-
-Non-NGSI APIs will be fully described only if they define an interface to an NGSI-Compliant component.
-
-Non-NGSI APIs in charge of enabling interfaces between components that are totally opaque from the NGSI
-point of view will be listed and/or shortly described if they are of relevance to understand, install or
-use the demo.
-```
-
-#### Testing
-
-```
-This section will contribute step-by-step procedures to perform a basic end-to-end test of the setup 
-features described in the mid-term review demo. For each test, the definition of the step-by-tep procedure
-may consist of:
-- Description of the use case that the test aim to cover
-- Definition of the required inputs and steps to retrieve meaningful outputs
-- A convenient simulator or simulated/dummy datasets to validate the use case in cases where the source 
-code, binaries, and/or functionality of a given component cannot be shared as part of the public demo.
-```
+It is based on Orion Context Broker entities and subscriptions, and is NGSIv2 compliant to process the incoming data into Line Protocol for influx-db.
 
 
+## Install
+
+How to install the component
+
+Information about how to install the FlexHex ROSE-AP can be found at the corresponding section of the
+[Installation & Administration Guide](docs/installationguide.md).
+
+## Quickstart and usage guide
+
+How to use the component
+
+Information about how to use the FlexHex ROSE-AP can be found in the [Getting Started guide](docs/getting-started.md).
+
+
+## API
+
+Definition of the API interface:
+
+Information about the API of  the FlexHex ROSE-AP can be found in the [API documentation](docs/api.md).
+
+
+## Testing
+
+TBD
 
 ## License
 
-[MIT](LICENSE) © <TTE>
+[Apache 2.0](LICENSE) © Factobotics
