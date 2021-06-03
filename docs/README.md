@@ -38,25 +38,29 @@ Currently there are four main parts that user/operator can control:
 It is based on Orion Context Broker entities and subscriptions, and is NGSIv2 compliant to process the incoming data into Line Protocol for influx-db.
 
 
-## Install
+## Architecture
+
+Information about architecture of the FlexHex ROSE-AP can be found in the [Architecture documentation](architecture.md).
+
+
+## Installation guide
 
 How to install the component
 
 Information about how to install the FlexHex ROSE-AP can be found at the corresponding section of the
-[Installation & Administration Guide](docs/installationguide.md).
+[Installation & Administration Guide](installationguide.md).
 
-## Quickstart and usage guide
+## Quickstart and step-by-step guide
 
 How to use the component
 
-Information about how to use the FlexHex ROSE-AP can be found in the [Getting Started guide](docs/getting-started.md).
+Information about how to get started using the FlexHex ROSE-AP can be found in the [Getting Started guide](getting-started.md).
 
+Information about how to use the FlexHex ROSE-AP can be found in the [Step-by-step guide](step-by-step.md).
 
-## API
+## API guide
 
-Definition of the API interface:
-
-Information about the API of  the FlexHex ROSE-AP can be found in the [API documentation](docs/api.md).
+Information about the API of the FlexHex ROSE-AP can be found in the [API documentation](api.md).
 
 
 ## Testing
@@ -66,3 +70,4 @@ TBD
 ## License
 
 [Apache 2.0](LICENSE) © Factobotics
+
