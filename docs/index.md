@@ -43,20 +43,20 @@ It is based on Orion Context Broker entities and subscriptions, and is NGSIv2 co
 How to install the component
 
 Information about how to install the FlexHex ROSE-AP can be found at the corresponding section of the
-[Installation & Administration Guide](docs/installationguide.md).
+[Installation & Administration Guide](./docs/installationguide.md).
 
 ## Quickstart and usage guide
 
 How to use the component
 
-Information about how to use the FlexHex ROSE-AP can be found in the [Getting Started guide](docs/getting-started.md).
+Information about how to use the FlexHex ROSE-AP can be found in the [Getting Started guide](./docs/getting-started.md).
 
 
 ## API
 
 Definition of the API interface:
 
-Information about the API of  the FlexHex ROSE-AP can be found in the [API documentation](docs/api.md).
+Information about the API of  the FlexHex ROSE-AP can be found in the [API documentation](./docs/api.md).
 
 
 ## Testing
