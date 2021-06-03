@@ -10,10 +10,11 @@ use_directory_urls: false
 theme: readthedocs
 pages:
   - Home: 'index.md'
+  - 'Installation Manual': 
+    - 'Installation Guide': 'installationguide.md'
   - 'Getting Started' : 'getting-started.md'
   - 'User & Programmers Manual':
     - 'Architecture' : 'architecture.md'
     - 'API' : 'api.md'
     - 'Step-by-step Guide': 'step-by-step.md'
-  - 'Installation Manual': 
-    - 'Installation Guide': 'installationguide.md'
+
