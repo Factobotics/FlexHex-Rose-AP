@@ -145,7 +145,7 @@ async def subscribe_to_measurement(request: Request, measurement: str):
     async with httpx.AsyncClient() as client:
         resp = await client.get(
             "{}://{}:{}/v2/subscriptions?options=keyValues".format(
-                config.ocb_http_protocol,
+                config.OCB_PROTOCOL,
                 config.OCB_IP,
                 config.OCB_PORT
             )
@@ -171,7 +171,7 @@ async def subscribe_to_measurement(request: Request, measurement: str):
                 for sub in subscriptions_obj:
                     resp = await client.delete(
                         '{}://{}:{}/v2/subscriptions/{}?options=keyValues'.format(
-                            config.ocb_http_protocol,
+                            config.OCB_PROTOCOL,
                             config.OCB_IP,
                             config.OCB_PORT,
                             sub["id"]
@@ -189,7 +189,7 @@ async def subscribe_to_measurement(request: Request, measurement: str):
                             status_code=resp.status_code, detail=resp.json())
                 resp = await client.post(
                     '{}://{}:{}/v2/subscriptions?options=keyValues'.format(
-                        config.ocb_http_protocol,
+                        config.OCB_PROTOCOL,
                         config.OCB_IP,
                         config.OCB_PORT
                     ),
@@ -221,10 +221,10 @@ async def subscribe_to_measurement(request: Request, measurement: str):
                 logger.info("Subscription matched.")
                 resp = await client.patch(
                     '{}://{}:{}/v2/subscriptions/{}?options=keyValues'.format(
-                        config.ocb_http_protocol,
+                        config.OCB_PROTOCOL,
                         config.OCB_IP,
                         config.OCB_PORT,
-                        subscription_obj[0]["id"]
+                        subscriptions_obj[0]["id"]
                     ),
                     json=subscription_obj
                 )
@@ -255,7 +255,7 @@ async def subscribe_to_measurement(request: Request, measurement: str):
                 )
                 resp = await client.post(
                     '{}://{}:{}/v2/subscriptions?options=keyValues'.format(
-                        config.ocb_http_protocol,
+                        config.OCB_PROTOCOL,
                         config.OCB_IP,
                         config.OCB_PORT
                     ),
@@ -280,7 +280,7 @@ async def subscribe_to_measurement(request: Request, measurement: str):
             logger.info("Subscriptions list was empty.")
             resp = await client.post(
                 '{}://{}:{}/v2/subscriptions?options=keyValues'.format(
-                    config.ocb_http_protocol,
+                    config.OCB_PROTOCOL,
                     config.OCB_IP,
                     config.OCB_PORT
                 ),
@@ -331,7 +331,7 @@ async def get_measurement_subscription(request: Request, measurement: str):
     async with httpx.AsyncClient() as client:
         resp = await client.get(
             "{}://{}:{}/v2/subscriptions?options=keyValues".format(
-                config.ocb_http_protocol,
+                config.OCB_PROTOCOL,
                 config.OCB_IP,
                 config.OCB_PORT)
         )
@@ -341,13 +341,13 @@ async def get_measurement_subscription(request: Request, measurement: str):
             raise HTTPException(
                 status_code=resp.status_code, detail=resp.json())
         response_data = resp.json()
-        subscription_obj = []
+        subscriptions_obj = []
         if response_data:
             for sub in response_data:
                 if (sub["description"].find(measurement) > -1 and
                         sub["description"].find("ROSE-AP") > -1):
-                    subscription_obj.append(sub)
-            if len(subscription_obj) == 0:
+                    subscriptions_obj.append(sub)
+            if len(subscriptions_obj) == 0:
                 logger.info(
                     "No subscriptions found for %s measurement.", measurement)
                 raise HTTPException(
@@ -355,7 +355,7 @@ async def get_measurement_subscription(request: Request, measurement: str):
                     detail="No subscriptions found for {} measurement.".format(
                         measurement)
                 )
-            return subscription_obj
+            return subscriptions_obj
         logger.info("No subscriptions found.")
         raise HTTPException(
             status_code=404, detail="No subscriptions found.")
@@ -382,7 +382,7 @@ async def pause_measurement_subscription(request: Request, measurement: str):
     async with httpx.AsyncClient() as client:
         resp = await client.get(
             "{}://{}:{}/v2/subscriptions?options=keyValues".format(
-                config.ocb_http_protocol,
+                config.OCB_PROTOCOL,
                 config.OCB_IP,
                 config.OCB_PORT)
         )
@@ -409,7 +409,7 @@ async def pause_measurement_subscription(request: Request, measurement: str):
             for sub in subscriptions_obj:
                 resp = await client.patch(
                     "{}://{}:{}/v2/subscriptions/{}?options=keyValues".format(
-                        config.ocb_http_protocol,
+                        config.OCB_PROTOCOL,
                         config.OCB_IP,
                         config.OCB_PORT,
                         sub["id"]
@@ -457,7 +457,7 @@ async def resume_measurement_subscription(request: Request, measurement: str):
     async with httpx.AsyncClient() as client:
         resp = await client.get(
             "{}://{}:{}/v2/subscriptions?options=keyValues".format(
-                config.ocb_http_protocol,
+                config.OCB_PROTOCOL,
                 config.OCB_IP,
                 config.OCB_PORT)
         )
@@ -484,7 +484,7 @@ async def resume_measurement_subscription(request: Request, measurement: str):
             for sub in subscriptions_obj:
                 resp = await client.patch(
                     "{}://{}:{}/v2/subscriptions/{}?options=keyValues".format(
-                        config.ocb_http_protocol,
+                        config.OCB_PROTOCOL,
                         config.OCB_IP,
                         config.OCB_PORT,
                         sub["id"]
@@ -530,7 +530,7 @@ async def delete_measurement_subscription(request: Request, measurement: str):
     async with httpx.AsyncClient() as client:
         resp = await client.get(
             "{}://{}:{}/v2/subscriptions?options=keyValues".format(
-                config.ocb_http_protocol,
+                config.OCB_PROTOCOL,
                 config.OCB_IP,
                 config.OCB_PORT)
         )
@@ -557,7 +557,7 @@ async def delete_measurement_subscription(request: Request, measurement: str):
             for sub in subscriptions_obj:
                 resp = await client.delete(
                     "{}://{}:{}/v2/subscriptions/{}?options=keyValues".format(
-                        config.ocb_http_protocol,
+                        config.OCB_PROTOCOL,
                         config.OCB_IP,
                         config.OCB_PORT,
                         sub["id"]))
