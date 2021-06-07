@@ -1,4 +1,4 @@
-# Getting started
+# Step-by-step guide
 
 ### Configuring system dependent settings.
 
