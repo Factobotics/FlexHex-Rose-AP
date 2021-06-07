@@ -4,7 +4,7 @@ repo_url: https://github.com/Factobotics/FlexHex-Rose-AP
 site_description: FlexHex Rose-ap
 docs_dir: docs
 site_dir: html
-edit_uri: docs/
+edit_uri: blob/master/docs/
 markdown_extensions: [toc,fenced_code]
 use_directory_urls: false
 theme: readthedocs
