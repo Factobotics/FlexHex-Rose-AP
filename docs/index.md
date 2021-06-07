@@ -14,9 +14,9 @@ This project is part of [DIH^2](http://www.dih-squared.eu/). For more informatio
 ## Contents
 
 -   [Background](#background)
--   [Install](#install)
--   [Usage](#usage)
--   [API](#api)
+-   [Installation guide](#installation-guide)
+-   [Quickstart and step-bystep guides](#quickstart-and-step-by-step-guides)
+-   [API](#api-guide)
 -   [Testing](#testing)
 -   [License](#license)
 
