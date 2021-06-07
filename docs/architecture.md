@@ -33,7 +33,7 @@ Sends measurement subscription data into ROSE-AP end-point.
 
 Using the exposed API, 3rd party software can interface with the ROSE-AP to control and automate measurement, bucket and organizations creation. It also can create, delete and manipulate subscriptions, providing a flexible way to gather desired data.
 
-## Software used:
+## Software used
 - FastAPI (Python).
 - Redis.
 - Influx-db.
