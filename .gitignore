@@ -5,3 +5,7 @@ __pycache__
 Page/files
 influxdb2
 redis
+influxdb
+loudml
+grafana
+hastic
