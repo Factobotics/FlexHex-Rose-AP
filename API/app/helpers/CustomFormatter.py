@@ -1,5 +1,6 @@
 import logging
 
+
 class CustomFormatter(logging.Formatter):
     """Logging Formatter to add colors and count warning / errors"""
 
@@ -9,7 +10,8 @@ class CustomFormatter(logging.Formatter):
     red = "\x1b[31m"
     bold_red = "\x1b[31;1m"
     reset = "\x1b[0m"
-    # format = "%(levelname)s: %(asctime)s - [%(name)s:%(funcName)s](%(filename)s:%(lineno)d) - %(message)s"
+    # format = "%(levelname)s: %(asctime)s - \
+    # [%(name)s:%(funcName)s](%(filename)s:%(lineno)d) - %(message)s"
     format = "%(levelname)s: %(message)s"
 
     FORMATS = {

@@ -1,8 +1,11 @@
+import logging
+
 from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import HTMLResponse
+
 from fastapi.templating import Jinja2Templates
 import orjson
-import logging
+
 
 logger = logging.getLogger("buckets")
 
@@ -26,26 +29,26 @@ async def get_buckets(request: Request):
     Takes bucket object from redis and returns keys of it.
     """
     redis = request.app.state.redis
-    buckets = orjson.loads(await redis.get_key("influxdb_buckets"))
-    return [bucket for bucket in buckets]
+    buckets_obj = orjson.loads(await redis.get_key("influxdb_buckets"))
+    return [bucket for bucket in buckets_obj]
 
 
 @router.get("/get_bucket/{bucket}")
 async def get_bucket(request: Request, bucket: str):
     """
     ## Get data of the selected bucket.
-    
+
     Returns object with key as bucket name and value as bucket data.
 
     - **bucket**: bucket name.
     """
     redis = request.app.state.redis
-    buckets = orjson.loads(await redis.get_key("influxdb_buckets"))
-    if bucket not in buckets:
-        logger.warning("Bucket {} not found.".format(bucket))
+    buckets_obj = orjson.loads(await redis.get_key("influxdb_buckets"))
+    if bucket not in buckets_obj:
+        logger.warning("Bucket %s not found.", bucket)
         raise HTTPException(
             status_code=404, detail="Bucket {} not found.".format(bucket))
-    return {bucket: buckets[bucket]}
+    return {bucket: buckets_obj[bucket]}
 
 
 @router.post("/add_bucket")
@@ -54,17 +57,17 @@ async def add_bucket(request: Request, data: dict):
     ## Create a new bucket.
 
     Bucket also has to exists inside Influx-db.
-    
+
     - **data**:
         - **bucket**: new bucket name.
         - **bucket_data**: new bucket data.
     """
     redis = request.app.state.redis
-    buckets = orjson.loads(await redis.get_key("influxdb_buckets"))
-    buckets[data["bucket"]] = data["bucket_data"]
+    buckets_obj = orjson.loads(await redis.get_key("influxdb_buckets"))
+    buckets_obj[data["bucket"]] = data["bucket_data"]
 
-    await redis.set_key("influxdb_buckets", orjson.dumps(buckets))
-    logger.info("Bucket {} added.".format(data['bucket']))
+    await redis.set_key("influxdb_buckets", orjson.dumps(buckets_obj))
+    logger.info("Bucket %s added.", data['bucket'])
     return HTMLResponse(content="Bucket {} added.".format(data['bucket']), status_code=200)
 
 
@@ -81,14 +84,14 @@ async def update_bucket(request: Request, bucket: str, data: dict):
     """
 
     redis = request.app.state.redis
-    buckets = orjson.loads(await redis.get_key("influxdb_buckets"))
-    if bucket not in buckets:
-        logger.warning("Bucket {} not found.".format(bucket))
+    buckets_obj = orjson.loads(await redis.get_key("influxdb_buckets"))
+    if bucket not in buckets_obj:
+        logger.warning("Bucket %s not found.", bucket)
         raise HTTPException(
             status_code=404, detail="Bucket {} not found.".format(bucket))
-    buckets[bucket] = data["bucket_data"]
-    await redis.set_key("influxdb_buckets", orjson.dumps(buckets))
-    logger.info("Bucket {} updated.".format(bucket))
+    buckets_obj[bucket] = data["bucket_data"]
+    await redis.set_key("influxdb_buckets", orjson.dumps(buckets_obj))
+    logger.info("Bucket %s updated.", bucket)
     return HTMLResponse(content="Bucket {} updated.".format(bucket), status_code=200)
 
 
@@ -101,12 +104,12 @@ async def delete_bucket(request: Request, bucket: str):
     """
 
     redis = request.app.state.redis
-    buckets = orjson.loads(await redis.get_key("influxdb_buckets"))
-    if bucket not in buckets:
-        logger.warning("Bucket {} not found.".format(bucket))
+    buckets_obj = orjson.loads(await redis.get_key("influxdb_buckets"))
+    if bucket not in buckets_obj:
+        logger.warning("Bucket %s not found.", bucket)
         raise HTTPException(
             status_code=404, detail="Bucket {} not found.".format(bucket))
-    buckets.pop(bucket, None)
-    await redis.set_key("influxdb_buckets", orjson.dumps(buckets))
-    logger.info("Bucket {} deleted.".format(bucket))
+    buckets_obj.pop(bucket, None)
+    await redis.set_key("influxdb_buckets", orjson.dumps(buckets_obj))
+    logger.info("Bucket %s deleted.", bucket)
     return HTMLResponse(content="Bucket {} deleted.".format(bucket), status_code=200)
