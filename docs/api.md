@@ -6,6 +6,7 @@ The API documentation can be found:
 - OAS3 style  
 
     - ```<Your IP address>:5000/docs```
+    
 - Redoc style  
 
     - ```<Your IP address>:5000/redoc```
