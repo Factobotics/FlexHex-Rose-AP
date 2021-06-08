@@ -1,8 +1,10 @@
 
 version: 2
 
+python:
+  version: 3.7
+  install:
+  - requirements: docs/.requirements.txt
+
 mkdocs:
   configuration: mkdocs.yml
-
-python:
-  version: 3.6
