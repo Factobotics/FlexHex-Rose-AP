@@ -77,30 +77,54 @@ Files can be edited with text editor of your choice (Notepad, Notepad++, VSCode,
     - Windows users: **```Windows key + X```** and then press **A** key.
 - Navigate to **rose-ap** folder.
 
-    ```cd rose-ap```
+    - ```cd rose-ap```
+
 - Launch the docker compose:  
-    ```docker-compose up --build```  
+
+    - ```docker-compose up --build```  
+
 - It can take some time for all of the images to be pulled from the internet and then built, so please be patient. It can take up to 5 minutes on 100MB/s internet.
+
 - Expected behavior:
+
     - A lot of logs should be appearing in the terminal.
+
     - While browsing the terminal it should be seen that *api 1, mongo 1, orion 1* and *redis 1* containers are running and none of them exited due to error. 
+
     - If one or more containers writes ```<container_name> exited <0 or 1>``` something bad happened during initialization. 
+
     - In case of failure:
+
         - You can try to redo the steps.
+
         - Browse the logs in the terminal to figure out why and what crashed.
+
         - Browse logs in the ```rose-ap/API/app/logs```, for the module logs to look for errors.
+
         - Go to [Trouble shooting](trouble-shooting.md) documentation page for known bugs.
+
 - When docker-compose finishes you can close the terminal, but general logs won't be visible anymore. To view the logs from containers, do the **Launch the docker compose** step again in the **rose-ap** directory.
+
 - Find your computer or docker host IP address. 
+
     - Linux users (in terminal):   
-        ```hostname -I``` or ```ifconfig```  
-    - Windows users (in terminal / command prompt):  
-        ```ipconfig /all```  
+
+        - ```hostname -I``` or ```ifconfig```  
+
+    - Windows users (in terminal / command prompt): 
+
+        - ```ipconfig /all```  
+
 - Open your (computer or docker host) address via web-browser.
+
     - ```http://<your IP>:5000```
+
     - :warning: Add the **5000** port number to the address.
+
     - Example:
+
         - ```http://192.168.0.50:5000```
+
 - After some loading for the first time the UI and the *Welcome page* should be displayed.
 
 ### Orion Context Broker.
@@ -108,17 +132,27 @@ Files can be edited with text editor of your choice (Notepad, Notepad++, VSCode,
 Orion Context Broker API user guide can be found [here](https://fiware-orion.readthedocs.io/en/1.8.0/user/walkthrough_apiv2/index.html).
 
 - **To check Orion Context Broker version** (and test if it is alive):
+
     - Go to:
+
         - ```<your IP address>:1026/version```
+
     - Example:
+    
         - ```http://192.168.0.50:1026/version```
+
 <br>
 
 - **To check and create required Orion Context Broker entities**:
+
     - Go to:
+
         - ```<your IP address>:1026/v2/entities```
+
     - Example:
+
         - ```http://192.168.0.50:1026/v2/entities```
+
     <br>
 
     After going through the Orion Context Broker user guide, you will be somewhat familiar with the Orion Context Broker and comfortable enough to create some entities. 
@@ -168,10 +202,15 @@ Orion Context Broker API user guide can be found [here](https://fiware-orion.rea
 <br>
 
 - **To check Orion Context Broker subscriptions**:
+
     - Go to:
+
         - ```<your IP address>:1026/v2/subscriptions```
+
     - Example:
+
         - ```http://192.168.0.50:1026/v2/subscriptions```
+
     <br>
 
     By default, no subscriptions should be available.
@@ -340,7 +379,7 @@ You can navigate pages using the navigation bar on the left of the page.
 
 ### Testing the module:
 
-The next step is to make updates to the entity that you created previously in the **Orion Context Broker.** part of this guide. This will trigger the subscriptions that you created in **Using WEB interface.** **>Subscriptions** part of this guide.
+The next step is to make updates to the entity that you created previously in the **Orion Context Broker.** part of this guide. This will trigger the subscriptions that you created in "**Using WEB interface.** **>Subscriptions**" part of this guide.
 
 - Updating the entity of Orion Context Broker:
 
@@ -365,7 +404,9 @@ The next step is to make updates to the entity that you created previously in th
                 "platform_z": 3
             }
             ```
+
         - Example using curl:
+
             ```
             curl 192.168.0.50:1026/v2/entities?options=keyValues -X PATCH -s -S -H 'Content-Type: application/json' -d @- <<EOF
             {
@@ -395,6 +436,7 @@ Final step is to check out the results if the module actually did what it suppos
     - Select appropriate time range in the ```Time input```, so the data would be available inside the range selected.
     - Click ```Script editor```.
     - In the **Editor** window, paste:
+
         ```
         from(bucket: "Test")
             |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
@@ -403,37 +445,45 @@ Final step is to check out the results if the module actually did what it suppos
             |> keep(columns: ["_time", "_measurement", "hexapod", "x", "y", "z"])
             |> yield()
         ```
+
     - Click ```Submit```.
     - Data should be visible.
     - You can switch data visualization to ```Graph``` mode, to see changes overtime.
         - Replace **Editor** window text:
+
             ```
             from(bucket: "Test")
                 |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
                 |> filter(fn: (r) => r["_measurement"] == "hexapod_position")
                 |> yield()
             ```
+
     <br>
     
 - No data visible
     - If no data is visible, please adjust time range to a wider scope.
     - If no data is still shown, replace **Editor** window text:
+
         ```
         from(bucket: "Test")
             |> range(start: -100y, stop: 100y)
             |> filter(fn: (r) => r["_measurement"] == "hexapod_position")
             |> yield()
         ```
+
     - If no data is still shown, replace **Editor** window text:
 
         :warning: Replace bucket and measurement name.
+
         ```
         from(bucket: <Your bucket>)
             |> range(start: -100y, stop: 100y)
             |> filter(fn: (r) => r["_measurement"] == <Your measurement name>)
             |> yield()
         ```
+
     - If no data is still shown:
+    
         - Browse the logs in the terminal to figure out why and what crashed.
         - Browse logs in the ```rose-ap/API/app/logs```, for the module logs to look for errors.
         - Go to [Trouble shooting](trouble-shooting.md) documentation page for known bugs.
