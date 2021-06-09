@@ -172,6 +172,7 @@ Orion Context Broker API user guide can be found [here](https://fiware-orion.rea
     - Example entity that can be created in almost any of the REST client/tool:
 
         ```<POST REQUEST> to 192.168.0.50:1026/v2/entities?options=keyValues```
+
         ``` 
         {
             "id": "hexapod1",
@@ -184,7 +185,9 @@ Orion Context Broker API user guide can be found [here](https://fiware-orion.rea
             }
         }
         ```
+
     - Example using curl:
+
         ```
         curl 192.168.0.50:1026/v2/entities?options=keyValues -s -S -H 'Content-Type: application/json' -d @- <<EOF
         {
@@ -199,6 +202,7 @@ Orion Context Broker API user guide can be found [here](https://fiware-orion.rea
         }
         EOF
         ```
+        
 <br>
 
 - **To check Orion Context Broker subscriptions**:
