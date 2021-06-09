@@ -82,7 +82,6 @@
 
 Alternative:
 - Navigate to Influx-db user interface.
-
     - Address:
 
         - ```http://<your IP address>:8086/``` 
