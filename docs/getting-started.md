@@ -81,7 +81,9 @@
 - It should display a graph. Data points on the graph depends on the amount of patch requests/updates made to the demo entity.
 
 Alternative:
+
 - Navigate to Influx-db user interface.
+
     - Address:
 
         - ```http://<your IP address>:8086/``` 
