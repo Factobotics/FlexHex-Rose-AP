@@ -47,12 +47,17 @@
     You will be updating the **hexapod1** entity, that is created by default when system starts.
 
     - Address:
+
         - ```http://<Your IP address>:1026/v2/entities/hexapod1/attrs?options=keyValues```
+
     - Request type:
+
         - ```PATCH```
+
     - Request body:
         - Content-Type: application/json
         - Body:
+        
             ```
             {
                 "platform_x": 1,
@@ -60,6 +65,7 @@
                 "platform_z": 3
             }
             ```
+
     :warning: Patch demo entity a few times, but everytime change at least one of the "platform_" values. So the "coordinates" would change, otherwise, the Orion Context Broker may ignore duplicates. 
 
 ## See the results in Influx-db
@@ -76,16 +82,21 @@
 
 Alternative:
 - Navigate to Influx-db user interface.
+
     - Address:
+
         - ```http://<your IP address>:8086/``` 
+
 - Navigate to Explore tab (via navigation bar on the left).
 - Switch to **Script editor** mode. (button near *Submit*)
 - Paste the query:
+
     ```
     from(bucket: "Test")
     |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
     |> filter(fn: (r) => r["_measurement"] == "hexapod_position")
     ```
+    
 - Click the **Submit** button.
 - It should display a graph. Data points on the graph depends on the amount of patch requests/updates made to the demo entity.
 
