@@ -21,9 +21,11 @@
 - Navigate to **rose-ap** folder.
 
     ```cd rose-ap```
+
 - Launch the docker compose:
 
     ```docker-compose up --build```  
+    
 - It can take some time for all of the images to be pulled from the internet and then built, so please be patient. It can take up to 5 minutes on 100MB/s internet.
 
 ## Using the module UI. Create subscription for demo measurement
