@@ -6,7 +6,7 @@ Files can be edited with text editor of your choice (Notepad, Notepad++, VSCode,
 
 - **docker-compose.yaml** - Container orchestration configuration.
     - file location:  
-    ```rose-ap/docker-compose.yaml```  
+    ```FlexHex-Rose-AP/docker-compose.yaml```  
     - services:
         - **api**: Project application.
         - **orion**: Orion Context Broker.
@@ -15,12 +15,12 @@ Files can be edited with text editor of your choice (Notepad, Notepad++, VSCode,
         - **influxdb**: InfluxDB instance.
     <br>
 
-- **.env** - Configuration file for ```rose-ap/docker-compose.yaml```.
+- **.env** - Configuration file for ```FlexHex-Rose-AP/docker-compose.yaml```.
 
     This **file can be hidden** so you might need to adjust your system settings.
 
     - **File location**:  
-    ```rose-ap/.env```  
+    ```FlexHex-Rose-AP/.env```  
     - **Variables**:
         - DOCKER_INFLUXDB_INIT_MODE - Launch mode of the container. Can be setup or upgrade. Setup prepares the Influx-db for demo, upgrade - upgrades Influx-db from 1.x to 2.x.
         - DOCKER_INFLUXDB_INIT_USERNAME - Default users username.
@@ -32,7 +32,7 @@ Files can be edited with text editor of your choice (Notepad, Notepad++, VSCode,
 
 - **Dockerfiles** - Files defining Docker containers
     - file locations:  
-    ```rose-ap/API/Dockerfile```
+    ```FlexHex-Rose-AP/API/Dockerfile```
     <br>
 
 - **.env** - Configuration file for project application.
@@ -40,7 +40,7 @@ Files can be edited with text editor of your choice (Notepad, Notepad++, VSCode,
     There is no need to edit this file to try the module. This **file can be hidden** so you might need to adjust your system settings.
 
     - **File location**:  
-    ```rose-ap/API/app/.env```  
+    ```FlexHex-Rose-AP/API/app/.env```  
     - **Variables**:
         - **General variables**:
             - PRINT_CONFIG - If set to *true*, prints the whole configuration when application workers start.
@@ -75,9 +75,9 @@ Files can be edited with text editor of your choice (Notepad, Notepad++, VSCode,
 - Open terminal 
     - Linux users: **```CTRL + SHIFT + T```**
     - Windows users: **```Windows key + X```** and then press **A** key.
-- Navigate to **rose-ap** folder.
+- Navigate to **FlexHex-Rose-AP** folder.
 
-    - ```cd rose-ap```
+    - ```cd FlexHex-Rose-AP```
 
 - Launch the docker compose:  
 
@@ -99,11 +99,11 @@ Files can be edited with text editor of your choice (Notepad, Notepad++, VSCode,
 
         - Browse the logs in the terminal to figure out why and what crashed.
 
-        - Browse logs in the ```rose-ap/API/app/logs```, for the module logs to look for errors.
+        - Browse logs in the ```FlexHex-Rose-AP/API/app/logs```, for the module logs to look for errors.
 
         - Go to [Trouble shooting](trouble-shooting.md) documentation page for known bugs.
 
-- When docker-compose finishes you can close the terminal, but general logs won't be visible anymore. To view the logs from containers, do the **Launch the docker compose** step again in the **rose-ap** directory.
+- When docker-compose finishes you can close the terminal, but general logs won't be visible anymore. To view the logs from containers, do the **Launch the docker compose** step again in the **FlexHex-Rose-AP** directory.
 
 - Find your computer or docker host IP address. 
 
@@ -489,6 +489,6 @@ Final step is to check out the results if the module actually did what it suppos
     - If no data is still shown:
     
         - Browse the logs in the terminal to figure out why and what crashed.
-        - Browse logs in the ```rose-ap/API/app/logs```, for the module logs to look for errors.
+        - Browse logs in the ```FlexHex-Rose-AP/API/app/logs```, for the module logs to look for errors.
         - Go to [Trouble shooting](trouble-shooting.md) documentation page for known bugs.
     <br>

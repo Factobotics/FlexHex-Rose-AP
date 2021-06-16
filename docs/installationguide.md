@@ -42,8 +42,8 @@
     - Windows users: **```Windows key + X```** and then press **A** key (For administrator access).
 - Navigate to your created folder.
 - Clone the repository:  
-        ```git clone https://gitlab.com/factobotics/rose-ap```  
+        ```git clone https://github.com/Factobotics/FlexHex-Rose-AP```  
 - Enter credentials if necessary.
-- Project files should be downloaded in **rose-ap** folder.
+- Project files should be downloaded in **FlexHex-Rose-AP** folder.
 
 This is the end of the installation part for the module, for further steps, please nagivate to [Getting started](getting-started.md).

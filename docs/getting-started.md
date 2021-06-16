@@ -18,9 +18,9 @@
     - Linux users: **```CTRL + SHIFT + T```**
     - Windows users: **```Windows key + X```** and then press **A** key.
     <br>
-- Navigate to **rose-ap** folder.
+- Navigate to **FlexHex-Rose-AP** folder.
 
-    ```cd rose-ap```
+    ```cd FlexHex-Rose-AP```
 
 - Launch the docker compose:
 
