@@ -84,7 +84,7 @@ async def update_organization(request: Request, org: str, data: dict):
 
     - **org**: organization name.
     - **data**:
-        - **organization_data**: orgnization data to overwrite the existing one.
+        - **organization_data**: Organization data to overwrite the existing one.
     """
     redis = request.app.state.redis
     organizations_obj = orjson.loads(await redis.get_key("influxdb_organizations"))
@@ -114,5 +114,5 @@ async def delete_organization(request: Request, org: str):
             status_code=404, detail="Organization {} not found.".format(org))
     organizations_obj.pop(org, None)
     await redis.set_key("influxdb_organizations", orjson.dumps(organizations_obj))
-    logger.info("Orgnization %s deleted", org)
-    return HTMLResponse(content="Orgnization {} deleted".format(org), status_code=200)
+    logger.info("Organization %s deleted", org)
+    return HTMLResponse(content="Organization {} deleted".format(org), status_code=200)

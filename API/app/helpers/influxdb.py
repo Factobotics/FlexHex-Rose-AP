@@ -50,4 +50,5 @@ class InfluxDB:
             logger.error(traceback.format_exc())
             return False
     def close(self):
-        self.client.close()
+        if self.client:
+            self.client.close()

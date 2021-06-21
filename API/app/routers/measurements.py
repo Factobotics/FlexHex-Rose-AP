@@ -61,6 +61,7 @@ async def add_measurement(request: Request, data: dict):
         - **measurement**: new measurement name.
         - **measurement_data**: new measurement data.
     """
+    logger.error(data)
     redis = request.app.state.redis
     measurements_obj = orjson.loads(await redis.get_key("influxdb_measurements"))
     measurement = data["measurement"]

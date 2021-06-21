@@ -55,9 +55,11 @@ class RedisDB:
                 connection_cls=self.connection_cls,
                 loop=self.loop
             )
+            return True
         except Exception as error:
             logger.error(error)
             logger.error(traceback.format_exc())
+            return False
 
     async def set_key(self, key, value):
         if self.redis is None:
@@ -74,8 +76,22 @@ class RedisDB:
             return await self.redis.get(key, encoding='utf-8')
         return False
 
+    async def delete_key(self, key):
+        if self.redis is None:
+            await self.get_connection()
+        if self.redis is not None:
+            return await self.redis.delete(key)
+        return False
+
     async def close_connection(self):
         if self.redis is not None:
             self.redis.close()
             await self.redis.wait_closed()
         return True
+
+    async def check_connection(self):
+        if self.redis is not None:
+            return self.redis.closed
+        return True
+
+    

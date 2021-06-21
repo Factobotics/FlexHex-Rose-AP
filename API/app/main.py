@@ -173,20 +173,18 @@ async def end_point(subscription_data: dict):
         raise HTTPException(status_code=500, detail="No subscription data.")
 
     redis = app.state.redis
-
-    if not redis.get_key("influxdb_buckets"):
+    if not await redis.get_key("influxdb_buckets"):
         logger.error("Buckets config undefined.")
         raise HTTPException(
             status_code=500, detail="Buckets config undefined.")
-    if not redis.get_key("influxdb_measurements"):
+    if not await redis.get_key("influxdb_measurements"):
         logger.error("Measurements config undefined.")
         raise HTTPException(
             status_code=500, detail="Measurements config undefined.")
-    if not redis.get_key("influxdb_organizations"):
+    if not await redis.get_key("influxdb_organizations"):
         logger.error("Organizations config undefined.")
         raise HTTPException(
             status_code=500, detail="Organizations config undefined.")
-
     # records = []
     records = {}
     found_org = False
@@ -280,7 +278,7 @@ async def get_config(desired_config: ConfigName):
 
     - **desired_config**: config name to be returned.
     """
-    redis = app.redis
+    redis = app.state.redis
     if desired_config == "server":
         return orjson.loads(await redis.get_key("influxdb_server"))
     if desired_config == "organizations":
@@ -289,8 +287,6 @@ async def get_config(desired_config: ConfigName):
         return orjson.loads(await redis.get_key("influxdb_buckets"))
     if desired_config == "measurements":
         return orjson.loads(await redis.get_key("influxdb_measurements"))
-    raise HTTPException(
-        status_code=404, detail="Config {} not found.".format(desired_config))
 
 
 @app.post("/update_config/{desired_config}", tags=["config"])
@@ -300,26 +296,25 @@ async def update_config(desired_config: ConfigName, value: dict):
 
     - **desired_config**: config name to be updated.
     """
-    redis = app.redis
+    redis = app.state.redis
     if desired_config == "server":
         await redis.set_key("influxdb_server", orjson.dumps(value))
         return orjson.loads(await redis.get_key("influxdb_server"))
-    elif desired_config == "organizations":
+    if desired_config == "organizations":
         await redis.set_key("influxdb_organizations", orjson.dumps(value))
         return orjson.loads(await redis.get_key("influxdb_organizations"))
-    elif desired_config == "buckets":
+    if desired_config == "buckets":
         await redis.set_key("influxdb_buckets", orjson.dumps(value))
         return orjson.loads(await redis.get_key("influxdb_buckets"))
-    elif desired_config == "measurements":
+    if desired_config == "measurements":
         await redis.set_key("influxdb_measurements", orjson.dumps(value))
         return orjson.loads(await redis.get_key("influxdb_measurements"))
-    else:
-        raise HTTPException(
-            status_code=404, detail="Config {} not found.".format(desired_config))
 
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    app.state.influxdb.close()
-    app.state.redis.close_connection()
+    if app.state.influxdb:
+        app.state.influxdb.close()
+    if app.state.redis:
+        await app.state.redis.close_connection()
     logger.info("Rose-AP showdown")

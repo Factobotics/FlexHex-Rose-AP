@@ -44,7 +44,7 @@ INFLUXDB_PORT = str(os.getenv('INFLUXDB_PORT', '8086'))
 INFLUXDB_TOKEN = os.getenv('INFLUXDB_TOKEN', None)
 
 
-if os.getenv('PRINT_CONFIG', None).lower() in ('true', '1', 't'):
+if os.getenv('PRINT_CONFIG', None).lower() in ('true', '1', 't'): # pragma: no cover
     print(os.getenv('LOGS_LEVEL'))
     print(os.getenv('LOGS_PATH'))
     print(os.getenv('LOGS_FILENAME'))

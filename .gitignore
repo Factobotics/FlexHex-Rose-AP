@@ -9,3 +9,5 @@ influxdb
 loudml
 grafana
 hastic
+.coverage
+htmlcov
