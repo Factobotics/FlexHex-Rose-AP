@@ -1,6 +1,6 @@
 import logging
-from fastapi import APIRouter, HTTPException, Request
-from fastapi.responses import HTMLResponse
+from fastapi import APIRouter, HTTPException, Request, status
+from fastapi.responses import HTMLResponse, Response
 
 from fastapi.templating import Jinja2Templates
 import orjson
@@ -51,7 +51,7 @@ async def get_organization(request: Request, org: str):
     return {org: organizations_obj[org]}
 
 
-@router.post("/add_organization")
+@router.post("/add_organization", status_code=status.HTTP_201_CREATED)
 async def add_organization(request: Request, data: dict):
     """
     ## Create a new organization.
@@ -67,15 +67,12 @@ async def add_organization(request: Request, data: dict):
     organizations_obj[data["organization"]] = data["organization_data"]
     await redis.set_key("influxdb_organizations", orjson.dumps(organizations_obj))
     logger.info("Organization %s added", data['organization'])
-    return HTMLResponse(
-        content="Organization {} added".format(
+    return {"message": "Organization {} added".format(
             data['organization']
-        ),
-        status_code=200
-    )
+        )}
 
 
-@router.post("/update_organization/{org}")
+@router.post("/update_organization/{org}", status_code=status.HTTP_202_ACCEPTED)
 async def update_organization(request: Request, org: str, data: dict):
     """
     ## Update selected organization.
@@ -95,7 +92,7 @@ async def update_organization(request: Request, org: str, data: dict):
     organizations_obj[org] = data["organization_data"]
     await redis.set_key("influxdb_organizations", orjson.dumps(organizations_obj))
     logger.info("Organization %s updated", org)
-    return HTMLResponse(content="Organization {} updated".format(org), status_code=200)
+    return {"message": "Organization {} updated".format(org)}
 
 
 @router.delete("/delete_organization/{org}")

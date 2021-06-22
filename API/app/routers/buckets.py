@@ -1,6 +1,6 @@
 import logging
 
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Request, status
 from fastapi.responses import HTMLResponse
 
 from fastapi.templating import Jinja2Templates
@@ -51,7 +51,7 @@ async def get_bucket(request: Request, bucket: str):
     return {bucket: buckets_obj[bucket]}
 
 
-@router.post("/add_bucket")
+@router.post("/add_bucket", status_code=status.HTTP_201_CREATED)
 async def add_bucket(request: Request, data: dict):
     """
     ## Create a new bucket.
@@ -68,10 +68,10 @@ async def add_bucket(request: Request, data: dict):
 
     await redis.set_key("influxdb_buckets", orjson.dumps(buckets_obj))
     logger.info("Bucket %s added.", data['bucket'])
-    return HTMLResponse(content="Bucket {} added.".format(data['bucket']), status_code=200)
+    return {"message": "Bucket {} added.".format(data['bucket'])}
 
 
-@router.post("/update_bucket/{bucket}")
+@router.post("/update_bucket/{bucket}", status_code=status.HTTP_202_ACCEPTED)
 async def update_bucket(request: Request, bucket: str, data: dict):
     """
     ## Update selected bucket.
@@ -92,7 +92,7 @@ async def update_bucket(request: Request, bucket: str, data: dict):
     buckets_obj[bucket] = data["bucket_data"]
     await redis.set_key("influxdb_buckets", orjson.dumps(buckets_obj))
     logger.info("Bucket %s updated.", bucket)
-    return HTMLResponse(content="Bucket {} updated.".format(bucket), status_code=200)
+    return {"message": "Bucket {} updated.".format(bucket)}
 
 
 @router.delete("/delete_bucket/{bucket}")

@@ -1,3 +1,5 @@
+verbose = false;
+
 $( document ).ready(function() {
     $("#get_measurement_dropdown, #update_measurement_dropdown, #delete_measurement_dropdown, #subscribe_measurement_dropdown_button, #show_subscription_dropdown_button, #pr_measurement_dropdown, #delete_measurement_dropdown").on( "click", function() {
         var this_element = this;
@@ -298,15 +300,27 @@ $( document ).ready(function() {
 
         if(broke) return;
 
-
-        $.post( "/add_measurement", JSON.stringify({"measurement": measurement_name, "measurement_data": {"influx_data": influx_data, "subscription_data": subscription_data}}), function( data, statusText, xhr) {
-            if(data.search("added") > -1 && xhr.status == 200){
-                toastr.success("Measurement "+measurement_name+" added.");
+        $.ajax({
+            url: "/add_measurement",
+            type: 'POST',
+            contentType:"application/json",
+            dataType:"json",
+            data: JSON.stringify({"measurement": measurement_name, "measurement_data": {"influx_data": influx_data, "subscription_data": subscription_data}})
+        })
+        .done( function( data, statusText, xhr ) {
+            if (verbose) console.log(data);
+            if (verbose) console.log(statusText);
+            if (verbose) console.log(xhr);
+            if(data["message"].search("added") > -1 && xhr.status == 201){
+                toastr.success(data["message"]);
             } else{
                 toastr.error("Failed to add "+measurement_name+" measurement. Bucket missmatch.");
             }
         })
-        .fail(function(){
+        .fail(function( xhr, statusText, message ){
+            if (verbose) console.log(xhr);
+            if (verbose) console.log(statusText);
+            if (verbose) console.log(message);
             toastr.error("Failed to add "+measurement_name+" measurement.");
         });
     });
@@ -420,17 +434,28 @@ $( document ).ready(function() {
 
         if(broke) return;
 
-        // console.log({"measurement_data": {"influx_data": influx_data, "subscription_data": subscription_data}})
-        $.post( "/update_measurement/"+measurement_name, 
-        JSON.stringify({"measurement_data": {"influx_data": influx_data, "subscription_data": subscription_data}}), 
-        function( data, statusText, xhr ) {
-            if(data.search("updated") > -1 && xhr.status == 200){
-                toastr.success("Measurement "+measurement_name+" updated.");
+        $.ajax({
+            url: "/update_measurement/"+measurement_name,
+            type: 'POST',
+            contentType:"application/json",
+            dataType:"json",
+            data: JSON.stringify({"measurement_data": {"influx_data": influx_data, "subscription_data": subscription_data}})
+        })
+        .done( function( data, statusText, xhr ) {
+            if (verbose) console.log(data);
+            if (verbose) console.log(statusText);
+            if (verbose) console.log(xhr);
+            if(data["message"].search("updated") > -1 && xhr.status == 202){
+                toastr.success(data["message"]);
             } else{
                 toastr.error("Failed to update "+measurement_name+" measurement.");
             };
+            console.log(data, statusText, xhr );
         })
         .fail(function( xhr, statusText, message ){
+            if (verbose) console.log(xhr);
+            if (verbose) console.log(statusText);
+            if (verbose) console.log(message);
             if(xhr.status == 404){
                 toastr.error("Measurement "+measurement_name+" not found.");
             } else{

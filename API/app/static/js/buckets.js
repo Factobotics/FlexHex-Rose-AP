@@ -137,14 +137,27 @@ $( document ).ready(function() {
             return;
         }
 
-        $.post( "/add_bucket", JSON.stringify({"bucket": bucket_name, "bucket_data": bucket_data}), function( data, statusText, xhr) {
-            if(data.search("added") > -1 && xhr.status == 200){
-                toastr.success("success", "Bucket "+bucket_name+" added.");
+        $.ajax({
+            url: "/add_bucket",
+            type: 'POST',
+            contentType:"application/json",
+            dataType:"json",
+            data: JSON.stringify({"bucket": bucket_name, "bucket_data": bucket_data})
+        })
+        .done( function( data, statusText, xhr ) {
+            if (verbose) console.log(data);
+            if (verbose) console.log(statusText);
+            if (verbose) console.log(xhr);
+            if(data["message"].search("added") > -1 && xhr.status == 201){
+                toastr.success(data["message"]);
             } else{
                 toastr.error("Failed to add "+bucket_name+" bucket. Measurement missmatch.");
             }
         })
-        .fail(function(){
+        .fail(function( xhr, statusText, message ){
+            if (verbose) console.log(xhr);
+            if (verbose) console.log(statusText);
+            if (verbose) console.log(message);
             toastr.error("Failed to add "+bucket_name+" bucket.");
         });
     });
@@ -171,14 +184,28 @@ $( document ).ready(function() {
             return;
         }
 
-        $.post( "/update_bucket/"+bucket_name, JSON.stringify({"bucket_data": bucket_data}), function( data, statusText, xhr ) {
-            if(data.search("updated") > -1 && xhr.status == 200){
-                toastr.success("Bucket "+bucket_name+" updated.");
+        
+        $.ajax({
+            url: "/update_bucket/"+bucket_name,
+            type: 'POST',
+            contentType:"application/json",
+            dataType:"json",
+            data: JSON.stringify({"bucket_data": bucket_data})
+        })
+        .done( function( data, statusText, xhr ) {
+            if (verbose) console.log(data);
+            if (verbose) console.log(statusText);
+            if (verbose) console.log(xhr);
+            if(data["message"].search("updated") > -1 && xhr.status == 202){
+                toastr.success(data["message"]);
             } else{
                 toastr.error("Failed to update "+bucket_name+" bucket.");
             };
           })
-          .fail(function( xhr, statusText, message ){
+        .fail(function( xhr, statusText, message ){
+            if (verbose) console.log(xhr);
+            if (verbose) console.log(statusText);
+            if (verbose) console.log(message);
             if(xhr.status == 404){
                 toastr.error("Bucket "+bucket_name+" not found.");
             } else{

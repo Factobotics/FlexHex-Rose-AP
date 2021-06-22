@@ -132,14 +132,27 @@ $( document ).ready(function() {
             return;
         }
 
-        $.post( "/add_organization", JSON.stringify({"organization": organization_name, "organization_data": organization_data}), function( data, statusText, xhr) {
-            if(data.search("added") > -1 && xhr.status == 200){
-                toastr.success("Organization "+organization_name+" added.");
+        $.ajax({
+            url: "/add_organization",
+            type: 'POST',
+            contentType:"application/json",
+            dataType:"json",
+            data: JSON.stringify({"organization": organization_name, "organization_data": organization_data})
+        })
+        .done( function( data, statusText, xhr ) {
+            if (verbose) console.log(data);
+            if (verbose) console.log(statusText);
+            if (verbose) console.log(xhr);
+            if(data["message"].search("added") > -1 && xhr.status == 201){
+                toastr.success(data["message"]);
             } else{
                 toastr.error("Failed to add "+organization_name+" organization. Bucket missmatch.");
             }
         })
-        .fail(function(){
+        .fail(function( xhr, statusText, message ){
+            if (verbose) console.log(xhr);
+            if (verbose) console.log(statusText);
+            if (verbose) console.log(message);
             toastr.error("Failed to add "+organization_name+" organization.");
         });
     });
@@ -162,14 +175,27 @@ $( document ).ready(function() {
             }
         });
 
-        $.post( "/update_organization/"+organization_name, JSON.stringify({"organization_data": organization_data}), function( data, statusText, xhr ) {
-            if(data.search("updated") > -1 && xhr.status == 200){
-                toastr.success("Organization "+organization_name+" updated.");
+        $.ajax({
+            url: "/update_organization/"+organization_name,
+            type: 'POST',
+            contentType:"application/json",
+            dataType:"json",
+            data: JSON.stringify({"organization_data": organization_data})
+        })
+        .done( function( data, statusText, xhr ) {
+            if (verbose) console.log(data);
+            if (verbose) console.log(statusText);
+            if (verbose) console.log(xhr);
+            if(data["message"].search("updated") > -1 && xhr.status == 202){
+                toastr.success(data["message"]);
             } else{
                 toastr.error("Failed to update "+organization_name+" organization.");
             };
         })
         .fail(function( xhr, statusText, message ){
+            if (verbose) console.log(xhr);
+            if (verbose) console.log(statusText);
+            if (verbose) console.log(message);
             if(xhr.status == 404){
                 toastr.error("Organization "+organization_name+" not found.");
             } else{
