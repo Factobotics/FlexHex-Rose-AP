@@ -5,7 +5,6 @@ from influxdb_client import InfluxDBClient
 from influxdb_client.client.write_api import ASYNCHRONOUS
 
 
-
 logger = logging.getLogger("influx")
 
 
@@ -45,10 +44,11 @@ class InfluxDB:
             assert self.write_api is not None
             self.write_api.write(bucket=bucket, org=org, record=records)
             return True
-        except Exception as error:
-            logger.error(error)
+        except Exception as err:
+            logger.error(err)
             logger.error(traceback.format_exc())
             return False
+
     def close(self):
         if self.client:
             self.client.close()

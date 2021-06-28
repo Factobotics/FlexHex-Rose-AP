@@ -93,5 +93,3 @@ class RedisDB:
         if self.redis is not None:
             return self.redis.closed
         return True
-
-    

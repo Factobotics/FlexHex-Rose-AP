@@ -19,7 +19,7 @@ if os.getenv('DEMO', None).lower() in ('true', '1', 't'):
     DEMO = True
 
 LOGS_LEVEL = logging.NOTSET
-if os.getenv('LOGS_LEVEL').upper() in levels:
+if os.getenv('LOGS_LEVEL', 'NOTSET').upper() in levels:
     LOGS_LEVEL = levels[os.getenv('LOGS_LEVEL')]
 LOGS_PATH = os.getenv('LOGS_PATH', './logs/')
 LOGS_FILENAME = os.getenv('LOGS_FILENAME', "app.log")
