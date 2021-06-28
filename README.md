@@ -3,7 +3,10 @@
 [![License: Apache 2.0](https://img.shields.io/github/license/Factobotics/FlexHex-Rose-AP)](https://opensource.org/licenses/Apache-2.0)
 <br/>
 [![Documentation Status](https://readthedocs.org/projects/flexhex_rose-ap/badge/?version=latest)](https://flexhex_rose-ap.readthedocs.io/en/latest/?badge=latest)
+<br/>
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/4952/badge)](https://bestpractices.coreinfrastructure.org/projects/4952)
+<br/>
+![Coverage](https://img.shields.io/badge/coverage-83%25-yellowgreen)
 
 ROSE-AP of the FlexHex project tries to make data gathering from Orion Context Broker entities to influx-db easier.
 
