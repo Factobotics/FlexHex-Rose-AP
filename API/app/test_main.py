@@ -151,7 +151,7 @@ async def test_add_measurement(client, redis):
             }
         }
     })
-    assert response.status_code == 200
+    assert response.status_code == 201
     assert response.text.find("Measurement {} added".format("Test_measurement")) > -1
     await close_redis_connection(redis)
 
@@ -164,7 +164,7 @@ async def test_update_measurement(client, redis):
     json={
         "measurement_data": {"influx_data":{"fields":{"x":"platform_y"},"tags":{"hexapod":"id"}},"subscription_data":{"entities":[{"id":".","id_type":"pattern","type":"Hexapod","type_type":"pattern"}]}}
     })
-    assert response.status_code == 200
+    assert response.status_code == 202
     assert response.text.find("Measurement {} updated".format("Test_measurement")) > -1
     await close_redis_connection(redis)
 
@@ -241,7 +241,7 @@ async def test_add_organization(client, redis):
             "buckets":["Test_bucket"]
         }
     })
-    assert response.status_code == 200
+    assert response.status_code == 201
     assert response.text.find("Organization {} added".format("Test_organization")) > -1
     await close_redis_connection(redis)
 
@@ -256,7 +256,7 @@ async def test_update_organization(client, redis):
             "measurements":["Test_measurement", "Test_measurement_updated"]
         }
     })
-    assert response.status_code == 200
+    assert response.status_code == 202
     assert response.text.find("Organization {} updated".format("Test_organization")) > -1
     await close_redis_connection(redis)
 
@@ -333,7 +333,7 @@ async def test_add_bucket(client, redis):
             "measurements":["Test_measurement"]
         }
     })
-    assert response.status_code == 200
+    assert response.status_code == 201
     assert response.text.find("Bucket {} added".format("Test_bucket")) > -1
     await close_redis_connection(redis)
 
@@ -348,7 +348,7 @@ async def test_update_bucket(client, redis):
             "measurements":["Test_measurement", "Test_measurement_updated"]
         }
     })
-    assert response.status_code == 200
+    assert response.status_code == 202
     assert response.text.find("Bucket {} updated".format("Test_bucket")) > -1
     await close_redis_connection(redis)
 
