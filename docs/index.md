@@ -3,7 +3,10 @@
 [![License: Apache 2.0](https://img.shields.io/github/license/Factobotics/FlexHex-Rose-AP)](https://opensource.org/licenses/Apache-2.0)
 <br/>
 [![Documentation Status](https://readthedocs.org/projects/flexhex_rose-ap/badge/?version=latest)](https://flexhex_rose-ap.readthedocs.io/en/latest/?badge=latest)
+<br/>
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/4952/badge)](https://bestpractices.coreinfrastructure.org/projects/4952)
+<br/>
+![Coverage](https://img.shields.io/badge/coverage-83%25-yellowgreen)
 
 ROSE-AP of the FlexHex project tries to make data gathering from Orion Context Broker entities to influx-db easier.
 
@@ -92,9 +95,9 @@ Run **pytest**:
 
 - ```pytest```
 
-- It will gather all tests available and it will run them. All of the tests are currently inside ```FlexHex-Rose-AP/API/app/test_main.py``` module.
+    It will gather all tests available and it will run them. All of the tests are currently inside ```FlexHex-Rose-AP/API/app/test_main.py``` module.
 
-- After few moments, there should be logs appearing with the status of tests and finally the result will be displayed if everything was successful or not and why.
+    After few moments, there should be logs appearing with the status of tests and finally the result will be displayed if everything was successful or not and why.
 
 #### Running coverage
 
@@ -106,7 +109,7 @@ Run **coverage**:
 
 - ```coverage run -m pytest```
 
-- Coverage will run **pytest** and it will collect metrics in the background.
+    Coverage will run **pytest** and it will collect metrics in the background.
 
 Get **coverage** report:
 
@@ -114,7 +117,7 @@ Get **coverage** report:
 
 - ```coverage report```
 
-- It will display a table representing statements in files and how many of those statements are not covered by tests and the coverage of tests in percentage.
+    It will display a table representing statements in files and how many of those statements are not covered by tests and the coverage of tests in percentage.
 
 
 Get **coverage** report in a HTML file:
@@ -123,9 +126,9 @@ Get **coverage** report in a HTML file:
 
 - ```coverage html```
 
-- This will create ```htmlcov``` directory inside ```FlexHex-Rose-AP/API/app```. Inside, locate and open ```index.html``` in your browser. 
+    This will create ```htmlcov``` directory inside ```FlexHex-Rose-AP/API/app```. Inside, locate and open ```index.html``` in your browser. 
 
-- If everything was successful, there should be interactive report that will display lines where tests don't cover statements, percentage of coverage, excluded statements.
+    If everything was successful, there should be interactive report that will display lines where tests don't cover statements, percentage of coverage, excluded statements.
 
 
 ## License
