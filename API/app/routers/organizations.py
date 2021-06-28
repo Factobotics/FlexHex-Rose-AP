@@ -20,7 +20,7 @@ async def organizations(request: Request):
     return templates.TemplateResponse("organizations.html", {"request": request})
 
 
-@router.get("/get_organizations")
+@router.get("/get_organizations", status_code=status.HTTP_200_OK)
 async def get_organizations(request: Request):
     """
     ## Get a list of all available organizations.
