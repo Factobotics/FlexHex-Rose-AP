@@ -58,6 +58,9 @@ Information about how to get started using the FlexHex ROSE-AP can be found in t
 
 Information about how to use the FlexHex ROSE-AP can be found in the [Step-by-step guide](step-by-step.md).
 
+| :vhs: [Step-by-step tutorial video](https://drive.google.com/file/d/1f7pp1qqKlQVwLvFP3Z7CKAzR_O-qe3l6/view) |
+| --------------------------------------------- |
+
 ## API guide
 
 Information about the API of the FlexHex ROSE-AP can be found in the [API documentation](api.md).
