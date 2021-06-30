@@ -16,6 +16,9 @@ This project is part of [DIH^2](http://www.dih-squared.eu/). For more informatio
 | :books: [Documentation](https://flexhex_rose-ap.readthedocs.io/en/latest/) |
 | --------------------------------------------- |
 
+| :vhs: [Step-by-step tutorial video](https://drive.google.com/file/d/1f7pp1qqKlQVwLvFP3Z7CKAzR_O-qe3l6/view) |
+| --------------------------------------------- |
+
 
 ## Contents
 

@@ -1,5 +1,8 @@
 # Step-by-step guide
 
+| :vhs: [Step-by-step tutorial video](https://drive.google.com/file/d/1f7pp1qqKlQVwLvFP3Z7CKAzR_O-qe3l6/view) |
+| --------------------------------------------- |
+
 ### Configuring system dependent settings.
 
 Files can be edited with text editor of your choice (Notepad, Notepad++, VSCode, Nano, Atom).
